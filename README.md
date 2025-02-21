@@ -1,50 +1,37 @@
-# React + TypeScript + Vite
+# Getting Started with the Frontend Repository
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Prerequisite Installations
 
-Currently, two official plugins are available:
+### Git
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+The project obviously uses Git, but to be a bit more specific, it would likely be easiest to have a local installation of Git on your machine that is authenticated with your GitHub account so that you can clone the repository and then spin up the local development server on localhost (explained below).
 
-## Expanding the ESLint configuration
+### Node.js
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+Node.js is a runtime environment for executing JavaScript outside of a web browser. When you install it, it comes with various tools such as `npm` (Node Package Manager). Here is the [download page](https://nodejs.org/en/download) for Node.js. In terms of the version, any v22 should be fine and is likely already selected if you don't change anything. v23 or something lower than v22 might also be fine, but I'm currently on v22. 
 
-- Configure the top-level `parserOptions` property like this:
+While not a strict requirement, I recommend installing Node.js via a version manager. I'm on Mac and use [nvm](https://github.com/nvm-sh/nvm) (Node Version Manager). The best Windows equivalent might be [fnm](https://github.com/Schniz/fnm) (Fast Node Manager) or [nvm-windows](https://github.com/coreybutler/nvm-windows). There are various other installation methods listed on the Node.js download page. 
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+### TypeScript & React *are not prerequisite installations*
+
+You do not need a global installation of TypeScript or React. The project uses specific versions which are stored in your `node_modules` subdirectory after you run `npm install` (explained below).
+
+## Getting Into the Project Itself
+
+### Setting up
+
+```sh
+git clone <whatever you normally put here, depends on how you authenticate with GitHub>
+cd productivity-frontend
+npm install 
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+`npm install` creates a `node_modules` subdirectory that stores your local copies of all the dependencies. This subdirectory is large and `.gitignore`d. You can think of it kind of like a venv in Python, but you don’t use the `source` command to access it. Instead, npm accesses it when you run `npm <some command>`.
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+### Running
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+```sh
+npm run dev
 ```
+
+`npm run dev` is one of the scripts defined in `package.json`. It spins up the development server on your local machine using Vite. The default port is 5173. It should display something like `http://localhost:5173/` in the terminal. When you go to that URL in a browser, you should be able to see the default page rendered. Like anything else in the terminal, use control C to stop this process, after which the page should be gone if you refresh it in your browser.
