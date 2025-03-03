@@ -1,5 +1,11 @@
+import styles from './GameCanvas.module.css';
+
 const GameCanvas = () => {
-  return <p>This is where the game canvas will go!</p>;
+  return (
+    <div className={`${styles.gameCanvasDiv} placeholderDiv`}>
+      <p>Here is where the game canvas will go!</p>
+    </div>
+  );
 };
 
 export default GameCanvas;

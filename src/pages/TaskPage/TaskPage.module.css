@@ -1,0 +1,5 @@
+.taskPageDiv {
+  display: flex;
+  height: 90vmin;
+  margin: 5vmin;
+}
