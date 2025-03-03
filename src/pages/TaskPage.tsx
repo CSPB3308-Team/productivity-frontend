@@ -1,5 +1,13 @@
+import GameCanvas from '../components/GameCanvas/GameCanvas';
+import TaskArea from '../components/TaskArea/TaskArea';
+
 const TaskPage = () => {
-  return <p>Here is the task page!</p>;
+  return (
+    <>
+      <GameCanvas />
+      <TaskArea />
+    </>
+  );
 };
 
 export default TaskPage;
