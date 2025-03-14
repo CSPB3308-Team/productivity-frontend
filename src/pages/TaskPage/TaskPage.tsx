@@ -5,8 +5,10 @@ import styles from './TaskPage.module.css';
 const TaskPage = () => {
   return (
     <div className={styles.taskPageDiv}>
-      <GameCanvas />
-      <TaskArea />
+      <div className={styles.gameCanvasDiv}>
+        <GameCanvas />
+        <TaskArea />
+      </div>
     </div>
   );
 };
