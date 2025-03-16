@@ -31,7 +31,7 @@ const useGetRequest = <TResponse>(endpoint: string) => {
       const queryString = new URLSearchParams(queryParams).toString();
 
       try {
-        const response = await fetch(`${backendUrl}/${endpoint}/${queryString}`, {
+        const response = await fetch(`${backendUrl}/${endpoint}?${queryString}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
