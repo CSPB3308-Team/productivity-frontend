@@ -31,9 +31,10 @@ const LoginPage = () => {
     if (response && response.token) {
       console.log("Received Token:", response.token);
 
-      // ✅ Store token and update user state
+// Store token and update user state
       AuthService.login(response.token);
       setUser(AuthService.getUser());
+// Redirect to home
       navigate("/");
     } else {
       setError("Invalid email or password");
