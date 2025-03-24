@@ -4,14 +4,15 @@ import { TaskData } from '../../../types';
 import styles from './ShortTermTasks.module.css';
 import TaskBox from '../TaskBox';
 
-const ShortTermTasks = () => {
+const ShortTermTasks: React.FC<{ addingTask: boolean }> = ({ addingTask }) => {
   const [tasks, setTasks] = useState<TaskData[] | null>(null);
   const { data, error, loading, sendRequest } = useGetRequest<TaskData[]>('tasks');
 
   // Initially get the tasks
   useEffect(() => {
     sendRequest({ task_type: 'short-term' });
-  }, [sendRequest]);
+    // Depend on addingTask so that the list will update when a new task is added
+  }, [sendRequest, addingTask]);
 
   // Set the initial tasks to local state
   useEffect(() => {
@@ -23,11 +24,11 @@ const ShortTermTasks = () => {
       {loading && <p>Loading...</p>}
       {error && <p>Failed to get tasks: {error.message}</p>}
       {tasks && (
-        <>
+        <div className={styles.taskListDiv}>
           {tasks.map((task) => (
             <TaskBox key={task.id} task={task} />
           ))}
-        </>
+        </div>
       )}
     </div>
   );

@@ -2,4 +2,10 @@
   height: 70%;
   display: flex;
   flex-direction: column;
+  width: 95%;
+}
+
+.taskListDiv {
+  display: flex;
+  flex-direction: column;
 }
