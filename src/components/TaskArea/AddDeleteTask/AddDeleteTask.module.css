@@ -17,11 +17,11 @@
   border-radius: 10px;
 }
 
-.addTaskForm {
+.addDeleteTaskForm {
   display: flex;
   flex-direction: column;
 }
 
-.addTaskForm > * {
+.addDeleteTaskForm > * {
   margin: 5px;
 }

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import usePostPutPatchDelete from '../../../hooks/usePostPutPatchDelete';
 import { PostPutPatchTaskResponse, PostTaskRequired, TaskType } from '../../../types';
 import AuthService from '../../../utils/Auth';
-import styles from './AddTask.module.css';
+import styles from './AddDeleteTask.module.css';
 
 type AddTaskProps = {
   setAddingTask: (addingTask: boolean) => void;
@@ -17,10 +17,10 @@ const AddTask: React.FC<AddTaskProps> = ({ setAddingTask }) => {
     PostPutPatchTaskResponse
   >('tasks', 'POST');
 
-  // Automatically close 3s after successful creation
+  // Automatically close 2.5s after successful creation
   useEffect(() => {
     if (data) {
-      const timer = setTimeout(() => setAddingTask(false), 3000);
+      const timer = setTimeout(() => setAddingTask(false), 2500);
       return () => clearTimeout(timer); // Cleanup in case the component unmounts early
     }
   }, [data, setAddingTask]);
@@ -51,7 +51,7 @@ const AddTask: React.FC<AddTaskProps> = ({ setAddingTask }) => {
   return (
     <div className={styles.popupOverlay}>
       <div className={styles.popupContent}>
-        <form className={styles.addTaskForm} onSubmit={handleSubmit}>
+        <form className={styles.addDeleteTaskForm} onSubmit={handleSubmit}>
           <h3>Add a new task</h3>
           <label>
             Task Name:{' '}
@@ -95,7 +95,11 @@ const AddTask: React.FC<AddTaskProps> = ({ setAddingTask }) => {
           </button>
           {loading && <p>Loading...</p>}
           {error && <p>Failed to add task: {error.message}</p>}
-          {data && <p>{data.message}</p>}
+          {data && (
+            <p>
+              <i>{data.message}</i>
+            </p>
+          )}
         </form>
       </div>
     </div>

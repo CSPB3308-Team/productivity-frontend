@@ -2,7 +2,7 @@ import { useState } from 'react';
 import LongTermTasks from './LongTermTasks/LongTermTasks';
 import ShortTermTasks from './ShortTermTasks/ShortTermTasks';
 import styles from './TaskArea.module.css';
-import AddTask from './AddTask/AddTask';
+import AddTask from './AddDeleteTask/AddTask';
 
 const TaskArea = () => {
   const [addingTask, setAddingTask] = useState(false);

@@ -1,10 +1,13 @@
 import { useState } from 'react';
 import usePostPutPatchDelete from '../../hooks/usePostPutPatchDelete';
 import { PostPutPatchTaskResponse, TaskData } from '../../types';
+import DeleteTask from './AddDeleteTask/DeleteTask';
 
 const TaskBox: React.FC<{ task: TaskData }> = ({ task }) => {
   const [complete, setComplete] = useState(task.task_complete);
   const [messageVisible, setMessageVisible] = useState(false);
+  const [deletingTask, setDeletingTask] = useState(false);
+  const [isDeleted, setIsDeleted] = useState(false);
   const { data, error, loading, sendRequest } = usePostPutPatchDelete<
     { id: number; task_complete: boolean },
     PostPutPatchTaskResponse
@@ -19,11 +22,19 @@ const TaskBox: React.FC<{ task: TaskData }> = ({ task }) => {
     return () => clearTimeout(timer); // Cleanup in case the component unmounts early
   };
 
+  if (isDeleted) return <></>;
+
   return (
     <>
+      {deletingTask && (
+        <DeleteTask task={task} setDeletingTask={setDeletingTask} setIsDeleted={setIsDeleted} />
+      )}
       <label>
         <input type='checkbox' checked={complete} onChange={handleChange} />
         {task.task_name}
+        <button type='button' onClick={() => setDeletingTask(true)}>
+          Delete
+        </button>
       </label>
       {loading && <p>Loading...</p>}
       {error && <p>Failed to update task: {error.message}</p>}
