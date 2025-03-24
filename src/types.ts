@@ -10,3 +10,8 @@ export type TaskData = {
   task_type: TaskType;
   user_id: number;
 };
+
+export type PostPutPatchTaskResponse = {
+  message: string;
+  task: TaskData;
+};
