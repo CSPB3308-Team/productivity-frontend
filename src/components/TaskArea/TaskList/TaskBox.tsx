@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import usePostPutPatchDelete from '../../hooks/usePostPutPatchDelete';
-import { PostPutPatchTaskResponse, TaskData } from '../../types';
-import DeleteTask from './AddDeleteTask/DeleteTask';
+import usePostPutPatchDelete from '../../../hooks/usePostPutPatchDelete';
+import { PostPutPatchTaskResponse, TaskData } from '../../../types';
+import DeleteTask from '../AddDeleteTask/DeleteTask';
 
 const TaskBox: React.FC<{ task: TaskData }> = ({ task }) => {
   const [complete, setComplete] = useState(task.task_complete);
