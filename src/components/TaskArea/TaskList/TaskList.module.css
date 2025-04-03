@@ -1,0 +1,5 @@
+.taskListDiv {
+  display: flex;
+  flex-direction: column;
+  margin-right: auto;
+}

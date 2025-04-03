@@ -1,9 +1,11 @@
 import styles from './LongTermTasks.module.css';
+import TaskList from '../TaskList/TaskList';
 
-const LongTermTasks = () => {
+const LongTermTasks: React.FC<{ addingTask: boolean }> = ({ addingTask }) => {
   return (
     <div className={`${styles.longTermTasksDiv} placeholderDiv`}>
-      <p>Here is where long-term tasks will go!</p>
+      <h3>Long-Term Tasks</h3>
+      <TaskList taskType='long-term' addingTask={addingTask} />
     </div>
   );
 };
