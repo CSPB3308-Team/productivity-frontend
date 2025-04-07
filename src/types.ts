@@ -23,6 +23,13 @@ export type PostTaskRequired = {
   due_date: Date;
 };
 
+export type AuthUserData = {
+  id: number;
+  email: string;
+  first_name?: string;
+  last_name?: string;
+};
+
 export type UserInfo = {
   username: string;
   first_name: string;
