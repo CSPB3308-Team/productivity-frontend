@@ -22,3 +22,23 @@ export type PostTaskRequired = {
   task_type: TaskType;
   due_date: Date;
 };
+
+export type AuthUserData = {
+  id: number;
+  email: string;
+  first_name?: string;
+  last_name?: string;
+};
+
+export type UserInfo = {
+  username: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+  password: string;
+};
+
+export type UserSignupUpdateResponse = {
+  message: string;
+  user: UserInfo & { id: number };
+};
