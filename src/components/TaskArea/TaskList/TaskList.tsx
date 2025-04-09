@@ -38,7 +38,7 @@ const TaskList: React.FC<TaskListProps> = ({ taskType, addingTask }) => {
   useEffect(() => {
       console.log('Retrieved User:', user);
       if (user) {
-        sendRequest({ task_type: taskType, user_id: user.id});
+        sendRequest({ task_type: taskType, user_id: String(user.id)});
       // Depend on addingTask so that the list will update when a new task is added
       }
   }, [sendRequest, taskType, addingTask, user]);
