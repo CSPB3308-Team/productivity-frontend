@@ -1,28 +1,42 @@
 import { useEffect, useState } from 'react';
 import usePostPutPatchDelete from '../../hooks/usePostPutPatchDelete';
-import { UserInfoField, UserSignupUpdateResponse } from '../../types';
+import { AuthUserData, UserInfo, UserInfoField, UserSignupUpdateResponse } from '../../types';
 import AuthService from '../../utils/Auth';
+import { useNavigate } from 'react-router-dom';
 
 type InfoUpdateFormProps = {
   field: UserInfoField;
   setUpdatingInfo: (updatingInfo: UserInfoField | null) => void;
   token: string;
+  setUser: (user: AuthUserData | UserInfo | null) => void;
 };
 
-const InfoUpdateForm: React.FC<InfoUpdateFormProps> = ({ field, setUpdatingInfo, token }) => {
+const InfoUpdateForm: React.FC<InfoUpdateFormProps> = ({
+  field,
+  setUpdatingInfo,
+  token,
+  setUser,
+}) => {
   const [newInfo, setNewInfo] = useState('');
+  const navigate = useNavigate();
   const { data, error, loading, sendRequest } = usePostPutPatchDelete<
     Record<UserInfoField, string>,
     UserSignupUpdateResponse
   >('user', 'PATCH', { Authorization: `Bearer ${token}` });
 
-  // Automatically log out 2.5s after successful update (causes redirect)
+  // Automatically redirect or log out 2.5s after successful update
   useEffect(() => {
     if (data) {
-      const timer = setTimeout(() => AuthService.logout(), 2500);
+      setUser(data.user);
+      const timer = setTimeout(() => {
+        // Log out for email or password change
+        if (field === 'email' || field === 'password') AuthService.logout();
+        // Redirect to home for username, first name, or last name change
+        else navigate('/');
+      }, 2500);
       return () => clearTimeout(timer); // Cleanup in case the component unmounts early
     }
-  }, [data]);
+  }, [data, setUser, field, navigate]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

@@ -1,12 +1,12 @@
 import { useNavigate } from 'react-router-dom';
 import AuthService from '../../utils/Auth';
-import { AuthUserData, UserInfoField } from '../../types';
+import { AuthUserData, UserInfo, UserInfoField } from '../../types';
 import { useEffect, useState } from 'react';
 import InfoUpdateForm from './InfoUpdateForm';
 import DeleteAccount from './DeleteAccount';
 
 const AccountPage = () => {
-  const [user, setUser] = useState<AuthUserData | null>(null);
+  const [user, setUser] = useState<AuthUserData | UserInfo | null>(null);
   const [token, setToken] = useState('');
   const [updatingInfo, setUpdatingInfo] = useState<UserInfoField | null>(null);
   const navigate = useNavigate();
@@ -29,7 +29,12 @@ const AccountPage = () => {
         <h2>Hello, {user.first_name}!</h2>
         <br />
         {updatingInfo ? (
-          <InfoUpdateForm field={updatingInfo} setUpdatingInfo={setUpdatingInfo} token={token} />
+          <InfoUpdateForm
+            field={updatingInfo}
+            setUpdatingInfo={setUpdatingInfo}
+            token={token}
+            setUser={setUser}
+          />
         ) : (
           <>
             <button type='button' onClick={() => setUpdatingInfo('username')}>
