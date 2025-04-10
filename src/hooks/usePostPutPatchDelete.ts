@@ -8,6 +8,10 @@ import { backendUrl } from '../config';
  * @template TResponse - The expected response type.
  * @param endpoint - The API endpoint. Do not include the base URL, leading slash, or
  *                   parameters. Correct endpoint example: "tasks"
+ * @param method - The mutation request method to use.
+ * @param customHeaders - Any additional headers beyond the default. Always uses
+ *                        `{ 'Content-Type': 'application/json' }` unless a different
+ *                        'Content-Type' is passed to override.
  * @returns { data, error, loading, sendRequest }
  *          data - The expected TResponse or null.
  *          error - Any error encountered or null.
@@ -17,6 +21,7 @@ import { backendUrl } from '../config';
 const usePostPutPatchDelete = <TRequest, TResponse>(
   endpoint: string,
   method: 'POST' | 'PUT' | 'PATCH' | 'DELETE',
+  customHeaders: Record<string, string> = {},
 ) => {
   const [data, setData] = useState<TResponse | null>(null);
   const [error, setError] = useState<Error | null>(null);
@@ -37,14 +42,22 @@ const usePostPutPatchDelete = <TRequest, TResponse>(
       if (isSubmitting.current) return;
       isSubmitting.current = true;
 
+      setData(null);
       setLoading(true);
       setError(null);
+
+      // Combine default headers with passed headers
+      const defaultHeaders = { 'Content-Type': 'application/json' };
+      const finalHeaders = {
+        ...defaultHeaders,
+        ...customHeaders, // Passed headers override default if same key
+      };
 
       try {
         const response = await fetch(`${backendUrl}/${endpoint}`, {
           method: method,
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(body),
+          headers: finalHeaders,
+          ...(body && { body: JSON.stringify(body) }), // No body for DELETE
         });
         const parsedBody = await response.json();
         if (response.ok) setData(parsedBody);
@@ -56,7 +69,7 @@ const usePostPutPatchDelete = <TRequest, TResponse>(
         isSubmitting.current = false;
       }
     },
-    [endpoint, method],
+    [endpoint, method, customHeaders],
   );
 
   return { data, error, loading, sendRequest };
