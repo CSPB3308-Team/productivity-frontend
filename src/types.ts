@@ -30,6 +30,8 @@ export type AuthUserData = {
   last_name?: string;
 };
 
+export type UserInfoField = 'username' | 'first_name' | 'last_name' | 'email' | 'password';
+
 export type UserInfo = {
   username: string;
   first_name: string;
