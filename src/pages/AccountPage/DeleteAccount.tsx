@@ -1,8 +1,9 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import usePostPutPatchDelete from '../../hooks/usePostPutPatchDelete';
 import AuthService from '../../utils/Auth';
 
 const DeleteAccount: React.FC<{ token: string }> = ({ token }) => {
+  const [confirmingDelete, setConfirmingDelete] = useState(false);
   const { data, error, loading, sendRequest } = usePostPutPatchDelete<
     undefined, // No body for DELETE
     { message: string }
@@ -19,10 +20,23 @@ const DeleteAccount: React.FC<{ token: string }> = ({ token }) => {
   return (
     <>
       <h3>DANGER ZONE</h3>
-      {/* No body for DELETE */}
-      <button type='button' onClick={() => sendRequest(undefined)}>
+      <button type='button' onClick={() => setConfirmingDelete(true)}>
         Delete account
       </button>
+      {confirmingDelete && (
+        <>
+          <p>
+            <strong>Are you SURE you want to delete your account?</strong>
+          </p>
+          {/* No body for DELETE */}
+          <button type='button' onClick={() => sendRequest(undefined)}>
+            Yes, delete
+          </button>
+          <button type='button' onClick={() => setConfirmingDelete(false)}>
+            No, cancel deletion
+          </button>
+        </>
+      )}
       {loading && <p>Loading...</p>}
       {error && <p>Failed to delete account: {error.message}</p>}
       {data && <p>Successfully deleted account, redirecting...</p>}
