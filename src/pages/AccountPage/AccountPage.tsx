@@ -21,7 +21,7 @@ const AccountPage = () => {
     } else {
       navigate('/login');
     }
-  }, [navigate, updatingInfo]);
+  }, [navigate]);
 
   return (
     user && (
