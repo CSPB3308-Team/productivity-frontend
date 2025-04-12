@@ -5,12 +5,11 @@ import styles from './TaskList.module.css';
 import TaskBox from './TaskBox';
 import AuthService from '../../../utils/Auth';
 import { AuthUserData } from '../../../types';
-import { bool } from 'three/tsl';
 
 type TaskListProps = {
   taskType: TaskType;
   addingTask: boolean;
-}
+};
 
 const TaskList: React.FC<TaskListProps> = ({ taskType, addingTask }) => {
   const [tasks, setTasks] = useState<TaskData[] | null>(null);
@@ -20,27 +19,16 @@ const TaskList: React.FC<TaskListProps> = ({ taskType, addingTask }) => {
   // Check if user is logged in
   useEffect(() => {
     async function getUser() {
-    // const loggedInUser = AuthService.getUser();
-    const loggedInUser = AuthService.getUser();
-    console.log('Retrieved User:', loggedInUser);
-    // if (loggedInUser) {
-    //   setUser(loggedInUser);
-    // } 
-    
+      const loggedInUser = AuthService.getUser();
       setUser(loggedInUser);
     }
-
     getUser();
-  // TODO: redirect to login page if user is not logged in
   }, []);
 
-  // Initially get the tasks 
+  // Initially get the tasks
   useEffect(() => {
-      console.log('Retrieved User:', user);
-      if (user) {
-        sendRequest({ task_type: taskType, user_id: String(user.id)});
-      // Depend on addingTask so that the list will update when a new task is added
-      }
+    if (user) sendRequest({ task_type: taskType, user_id: String(user.id) });
+    // Depend on addingTask so that the list will update when a new task is added
   }, [sendRequest, taskType, addingTask, user]);
 
   // Set the initial tasks to local state
