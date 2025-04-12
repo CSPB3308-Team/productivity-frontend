@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import AuthService from '../../utils/Auth';
 import { useState } from 'react';
 import usePostPutPatchDelete from '../../hooks/usePostPutPatchDelete';
-import { UserInfo, UserSignupUpdateResponse } from '../../types';
+import { UserInfo, SignupResponse } from '../../types';
 
 const SignupPage = () => {
   const navigate = useNavigate();
@@ -11,10 +11,10 @@ const SignupPage = () => {
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { data, error, loading, sendRequest } = usePostPutPatchDelete<
-    UserInfo,
-    UserSignupUpdateResponse
-  >('signup', 'POST');
+  const { data, error, loading, sendRequest } = usePostPutPatchDelete<UserInfo, SignupResponse>(
+    'signup',
+    'POST',
+  );
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

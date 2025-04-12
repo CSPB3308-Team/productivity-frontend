@@ -40,7 +40,9 @@ export type UserInfo = {
   password: string;
 };
 
-export type UserSignupUpdateResponse = {
+export type SignupResponse = {
   message: string;
   user: UserInfo & { id: number };
 };
+
+export type UserUpdateResponse = SignupResponse & { token: string };
