@@ -46,6 +46,45 @@
   height: inherit;
 }
 
+.inventoryTabDiv {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  width: calc(70% + 11px);
+  height: 10%; 
+  padding-top: 2%;
+}
+
+.inventroyTab {
+  width: 25%;
+  min-width: 100px;
+  max-width: 200px;
+  height: 100%;
+  min-height: 50px;
+  background-image: url(/public/tab_box.svg);
+  background-size: 100% 100%;
+  background-color: white;
+  mask-image: url(/public/tab_box_mask.svg);
+  mask-size: 100% 100%;
+  cursor: pointer;
+}
+
+.inventroyTab:hover {
+  background-color: rgb(200, 200, 200);
+}
+
+.inventoryTabText {
+  display: flex;
+  position: relative;
+  height: inherit;
+  margin: 0;
+  align-items: center;
+  justify-content: center;
+  color: black;
+  font-family: Comic Sans MS, Comic Sans, cursive;
+}
+
 .inventoryGrid {
   position: relative;
   display: grid;
@@ -84,12 +123,14 @@
   cursor: pointer;
 }
 
-.inventoryGridItemName {
+.inventoryGridItemText {
   position: relative;
   top: calc(80% - 5px);
   height: 20%;
-  color: black;
-  font-size: 15px;
+  margin: 0;
   align-self: center;
+  font-family: Comic Sans MS, Comic Sans, cursive;
+  font-size: 15px;
+  color: black;
   z-index: 1;
 }

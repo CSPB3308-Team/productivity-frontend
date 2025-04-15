@@ -10,7 +10,9 @@ export default function InventoryMenu() {
     item_cost: number
   }
 
-  const [invTab, setInvTab] = useState(0);          // handle switching inventory tabs
+  const [invTab, setInvTab] = useState(0);    // handle switching inventory tabs
+  const [tabColor, setTabColor] = useState([true, false, false]); // manage styles to change color on selection
+
 
   // TODO: initialize this with the item data from the database
   const itemManifest: Item[] = buildItemManifest();
@@ -18,6 +20,16 @@ export default function InventoryMenu() {
   useEffect(() => {
     // TODO: get item data from the database
   }, [])
+
+  // switch the active tab for filtering and styling
+  function updateInvTab(invType: number) {
+    let tabTemp = tabColor;
+    tabTemp[invTab] = false;
+    tabTemp[invType] = true;
+
+    setTabColor(tabTemp);   
+    setInvTab(invType);
+  }
 
   // build an approximation of the database items
   function buildItemManifest(): Item[] {
@@ -76,17 +88,34 @@ export default function InventoryMenu() {
     return iCost;
   }
 
+  // generate the item inventory based on the current tab selection
   function buildItemGrid() {
-    const item_grid = itemManifest.map((item, idx) =>
+    // get items that match the current inventory tab
+    let i_type = '';
+    switch (invTab) {
+      case 0:
+        i_type = 'shirt';
+        break;
 
+      case 1:
+        i_type = 'shoes';
+        break;
+
+      case 2:
+        i_type = 'skin'
+    }
+
+    // make a new array with just those items
+    let tab_items = itemManifest.filter((item) => item.item_type === i_type);
+
+    // map those items into some html
+    const item_grid = tab_items.map((item, idx) =>
       <div className={styles.inventoryGridItem}>
-        <div className={styles.inventoryItemBox}/>
-        <span className={styles.inventoryGridItemName} key={idx}>
+        <div className={styles.inventoryItemBox} />
+        <p className={styles.inventoryGridItemText} key={idx}>
           {item.name}
-        </span>
+        </p>
       </div>
-
-
     );
 
     return item_grid;
@@ -95,6 +124,19 @@ export default function InventoryMenu() {
   return (
     <>
       <div className={styles.inventoryDiv}>
+        <div className={styles.inventoryTabDiv}>
+
+          <div className={styles.inventroyTab} onClick={() => updateInvTab(0)} style={{backgroundColor: tabColor[0] ? "grey" : "white"}}>
+            <p className={styles.inventoryTabText}>Shirts</p>
+          </div>
+          <div className={styles.inventroyTab} onClick={() => updateInvTab(1)} style={{backgroundColor: tabColor[1] ? "grey" : "white"}}>
+            <p className={styles.inventoryTabText}>Shoes</p>
+          </div>
+          <div className={styles.inventroyTab} onClick={() => updateInvTab(2)} style={{backgroundColor: tabColor[2] ? "grey" : "white"}}>
+            <p className={styles.inventoryTabText}>Skins</p>
+          </div>
+
+        </div>
         <div className={styles.inventoryGrid}>
           {buildItemGrid()}
         </div>
