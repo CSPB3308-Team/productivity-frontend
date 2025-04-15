@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import styles from './GameCanvas.module.css';
+import CurrencyIcon from './CurrencyIcon';
 
 export default function InventoryMenu() {
 
@@ -27,7 +28,7 @@ export default function InventoryMenu() {
     tabTemp[invTab] = false;
     tabTemp[invType] = true;
 
-    setTabColor(tabTemp);   
+    setTabColor(tabTemp);
     setInvTab(invType);
   }
 
@@ -126,21 +127,32 @@ export default function InventoryMenu() {
       <div className={styles.inventoryDiv}>
         <div className={styles.inventoryTabDiv}>
 
-          <div className={styles.inventroyTab} onClick={() => updateInvTab(0)} style={{backgroundColor: tabColor[0] ? "grey" : "white"}}>
+          <div className={styles.inventroyTab} onClick={() => updateInvTab(0)} style={{ backgroundColor: tabColor[0] ? "grey" : "white" }}>
             <p className={styles.inventoryTabText}>Shirts</p>
           </div>
-          <div className={styles.inventroyTab} onClick={() => updateInvTab(1)} style={{backgroundColor: tabColor[1] ? "grey" : "white"}}>
+          <div className={styles.inventroyTab} onClick={() => updateInvTab(1)} style={{ backgroundColor: tabColor[1] ? "grey" : "white" }}>
             <p className={styles.inventoryTabText}>Shoes</p>
           </div>
-          <div className={styles.inventroyTab} onClick={() => updateInvTab(2)} style={{backgroundColor: tabColor[2] ? "grey" : "white"}}>
+          <div className={styles.inventroyTab} onClick={() => updateInvTab(2)} style={{ backgroundColor: tabColor[2] ? "grey" : "white" }}>
             <p className={styles.inventoryTabText}>Skins</p>
           </div>
 
+          <div className={styles.inventoryCurrencyDiv}>
+            <div className={styles.inventoryCurrencyIconDiv}>
+              <CurrencyIcon />
+            </div>
+            <p className={styles.inventoryCurrencyCount}>
+              0000
+              {/* TODO: get user currency*/}
+            </p>
+
+          </div>
         </div>
+
         <div className={styles.inventoryGrid}>
           {buildItemGrid()}
         </div>
-      </div>
+      </div >
     </>
   )
 }
