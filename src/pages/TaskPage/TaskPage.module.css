@@ -6,6 +6,37 @@
 }
 
 .gameCanvasDiv {
-  display: flex;
-  min-width:200px;
+  position: relative;
+  /* display: flex; */
+  min-width: 500px;
+}
+
+/* INVENTORY MENU */
+.inventoryDiv {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  right: 15%;
+  bottom: 5%;
+}
+
+.inventoryBox {
+  position: absolute;
+  align-self: center;
+  z-index: 1;
+}
+
+.inventoryIconDiv{
+  width: inherit;
+  height: auto;
+  margin-top: auto;
+  cursor: pointer;
+}
+
+.inventoryIcon {
+  position: relative;
+  width: inherit;
+  height: inherit;
+  padding: 8%;
+  z-index:2;
 }

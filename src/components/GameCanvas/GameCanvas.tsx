@@ -12,7 +12,7 @@ export default function GameCanvas(){
   var devMode = true; 
 
   const CAM_FOV = 25;   // Camera field of view angle (degrees
-  const CAM_POS_Y = 35; // Camera Y position
+  const CAM_POS_Y = 32; // Camera Y position
   const CAM_POS_Z = 3;  // Camera Z position
   const AV_ROT = 30;    // Avatar rotation (degrees) 
 
