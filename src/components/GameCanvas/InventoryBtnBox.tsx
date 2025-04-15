@@ -1,8 +1,8 @@
-import styles from './TaskPage.module.css';
+import styles from './GameCanvas.module.css';
 
-export default function InventoryBox() {
+export default function InventoryBtnBox() {
   return (
-      <svg className={styles.inventoryBox}
+      <svg className={styles.inventoryBtnBox}
           xmlns="http://www.w3.org/2000/svg"
           version="1.1"
           viewBox="-0.5 -0.5 51 51"
