@@ -7,11 +7,11 @@ export function Blur(props: any) {
   // create a material texture that emulates a blur effect
   function blurMat() {
     var new_mat = new THREE.MeshPhysicalMaterial( {
-      color: 0xffffff,
+      color: 0x8cd3ff,
       transmission: 1,
       opacity: 1,
-      roughness: 0.5,
-      // thickness: 0.1,
+      roughness: 0.6,
+      thickness: 10,
       transparent: true
     } );
     return new_mat;

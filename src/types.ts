@@ -11,6 +11,26 @@ export type TaskData = {
   user_id: number;
 };
 
+export type ItemData = {
+  id: number;
+  item_cost: number;
+  item_type: string;
+  model_key: string;
+  name: string;
+}
+export type ItemUserData = {
+  id: number;
+  item_cost: number;
+  item_type: string;
+  model_key: string;
+  name: string;
+  owned: boolean;
+}
+
+export type BalanceData = {
+  balance: number;
+}
+
 export type PostPutPatchTaskResponse = {
   message: string;
   task: TaskData;

@@ -1,25 +1,32 @@
 import * as THREE from 'three'
-import { useEffect, useState } from 'react'
+import { useContext, useState } from 'react'
 import { Canvas } from '@react-three/fiber'
 import styles from './GameCanvas.module.css';
+
+import { AuthUserData } from '../../types';
+import { UserContext } from '../../pages/TaskPage/TaskPage';
+
 import { Avatar } from './Avatar';
 import { RoomFloor } from './RoomFloor';
-import { CanvasCamera } from './CanvasCamera';
 import { RoomWall } from './RoomWall';
+import { CanvasCamera } from './CanvasCamera';
 import { Blur } from './Blur';
 
 import InventoryIcon from './InventoryIcon';
 import InventoryIconHover from './InventoryIconHover';
 import InventoryMenu from './InventoryMenu';
+import InventoryPreview from './InventoryPreview';
 
 export default function GameCanvas() {
-
   var devMode = false;
+
+  const user = useContext(UserContext);
 
   const CAM_FOV = 25;   // Camera field of view angle (degrees
   const CAM_POS_Y = 32; // Camera Y position
   const CAM_POS_Z = 3;  // Camera Z position
-  const AV_ROT = 30;    // Avatar rotation (degrees) 
+  const AV_ROT = 20;     // Avatar rotation (degrees)
+  const AV_SCALE = 0.2;  // Avatar scale 
 
   const [camFov, setCamFov] = useState(CAM_FOV);
   const [camY, setCamY] = useState(CAM_POS_Y);
@@ -29,7 +36,6 @@ export default function GameCanvas() {
   const [isLoaded, setIsLoaded] = useState(false);  // used for things that need canvas to be ready
   const [invHover, setInvHover] = useState(false);  // handle inventory icon state
   const [openInv, setOpenInv] = useState(false);    // handle opening inventroy menu
-
 
   // handle changing the icon when the user hovers over the inventory div
   function mouseInvActive(active: boolean) {
@@ -66,7 +72,7 @@ export default function GameCanvas() {
     if (open == true) {
       return (
         <>
-          <InventoryMenu />
+          <InventoryMenu user={user as AuthUserData} />
         </>
       )
     }
@@ -172,10 +178,13 @@ export default function GameCanvas() {
           <RoomWall onClick={(e: any) => colorChange(e)} position={[-5, 0, 0]} rotation={[0, THREE.MathUtils.degToRad(90), 0]} />
           <RoomWall onClick={(e: any) => colorChange(e)} position={[5, 0, 0]} rotation={[0, THREE.MathUtils.degToRad(-90), 0]} />
           <RoomWall onClick={(e: any) => colorChange(e)} position={[0, 0, 5]} />
-          <Avatar position={[0, 0.6, 0]} rotation={[THREE.MathUtils.degToRad(-AV_ROT), 0, 0]} scale={[0.33, 0.33, 0.33]} />
+          <Avatar position={[0, 0.01, 0]}
+            rotation={[THREE.MathUtils.degToRad(-AV_ROT), THREE.MathUtils.degToRad(90), 0]}
+            scale={[AV_SCALE, AV_SCALE, AV_SCALE]} />
 
           {openInv ? <Blur position={[0, 5, 0]} /> : null}
 
+          <InventoryPreview doDress={openInv} />
         </Canvas>
       </div>
 
@@ -185,3 +194,4 @@ export default function GameCanvas() {
     </div >
   )
 }
+

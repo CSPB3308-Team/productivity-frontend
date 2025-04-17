@@ -1,29 +1,42 @@
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import styles from './GameCanvas.module.css';
 import CurrencyIcon from './CurrencyIcon';
+import useGetRequest from '../../hooks/useGetRequest';
+import { AuthUserData, ItemUserData } from '../../types';
+import { BalanceContext } from '../../pages/TaskPage/TaskPage';
 
-export default function InventoryMenu() {
+interface ItemInputs {
+  user?: AuthUserData
+}
 
-  interface Item {
-    id: number,
-    item_type: string,
-    name: string,
-    item_cost: number
-  }
+export default function InventoryMenu(inData: ItemInputs) {
 
-  const [invTab, setInvTab] = useState(0);    // handle switching inventory tabs
-  const [tabColor, setTabColor] = useState([true, false, false]); // manage styles to change color on selection
+  const { userBalance, setUserBalance } = useContext(BalanceContext);
 
+  // GET Request: item data from database
+  const { data, error, loading, sendRequest } = useGetRequest<ItemUserData[]>('items');
+  const [itemData, setItemData] = useState<ItemUserData[] | null>(null);  // stores item manifest
+  const [invTab, setInvTab] = useState(0);                                // handle switching inventory tabs
+  const [tabColor, setTabColor] = useState([true, false, false]);         // manage styles to change color on selection
+  const [showPurchase, setShowPurchase] = useState<boolean>(false);
+  const [selectedItem, setSelectedItem] = useState<ItemUserData | null>(null);
 
-  // TODO: initialize this with the item data from the database
-  const itemManifest: Item[] = buildItemManifest();
+  // gets user data from Context
+  const user = inData.user;
 
+  // get initial item table
   useEffect(() => {
-    // TODO: get item data from the database
-  }, [])
+    if (user) sendRequest({ user_id: String(user.id) });
+  }, [sendRequest]);
+
+  // Add the items to local state
+  useEffect(() => {
+    if (data) setItemData(data);
+  }, [data, setItemData]);
 
   // switch the active tab for filtering and styling
   function updateInvTab(invType: number) {
+    console.log("Item Data", data);
     let tabTemp = tabColor;
     tabTemp[invTab] = false;
     tabTemp[invType] = true;
@@ -32,94 +45,70 @@ export default function InventoryMenu() {
     setInvTab(invType);
   }
 
-  // build an approximation of the database items
-  function buildItemManifest(): Item[] {
-    let items = [];
-    let itemNames = getItemNames();
-    let itemCost = getItemCost();
+  function purchaseBox() {
+    return (
+      <>
+        <button className={styles.inventoryPurchaseButton} onClick={() => purchaseSelectedItem()}>
+          Purchase
+        </button>
+        <p className={styles.inventoryCostText}>{selectedItem?.item_cost}</p>
+      </>
+    )
+  }
 
-    for (let i = 0; i < 16; i++) {
-      let i_id = i + 1;
-      let i_item_type = '';
-      let i_name = itemNames[i];
-      let i_item_cost = itemCost[i];
-
-      // get item type
-      if (i < 6) {
-        i_item_type = 'shirt';
-      } else if (i < 12) {
-        i_item_type = 'shoes';
-      } else {
-        i_item_type = 'skin';
-      }
-
-      // build item object
-      let item = {
-        id: i_id,
-        item_type: i_item_type,
-        name: i_name,
-        item_cost: i_item_cost
-      }
-
-      items.push(item)
+  function updatePurchaseBox(show: boolean, item: ItemUserData) {
+    // adding an if statement so typescript shuts up
+    if (itemData) {
+      setShowPurchase(show);
+      setSelectedItem(item);
     }
-
-    return items;
   }
 
-  // get item name array
-  function getItemNames() {
-    let iNames = [
-      'White Shirt', 'Red Shirt', 'Blue Shirt', 'Green Shirt', 'Black Shirt', 'Rainbow Shirt',
-      'Black Shoes', 'Red Shoes', 'Blue Shoes', 'Green Shoes', 'White Shoes', 'Gold Shoes',
-      'Default Skin', 'Yellow Skin', 'Green Skin', 'Blue Skin', 'Rainbow Skin'
-    ];
-
-    return iNames;
+  function purchaseSelectedItem() {
+    // TODO: post request to actually buy the thing
+    setUserBalance((userBalance as number) - (selectedItem as ItemUserData).item_cost)
   }
 
-  // get item cost array
-  function getItemCost() {
-    let iCost = [
-      0, 100, 100, 100, 100, 200,
-      0, 50, 50, 50, 50, 100, 1000,
-      0, 200, 200, 200, 500
-    ];
-
-    return iCost;
-  }
-
-  // generate the item inventory based on the current tab selection
+  // Generate the item inventory based on the currently selected tab
   function buildItemGrid() {
-    // get items that match the current inventory tab
-    let i_type = '';
-    switch (invTab) {
-      case 0:
-        i_type = 'shirt';
-        break;
+    if (itemData) {
+      // get items that match the current inventory tab
+      let i_type = '';
+      switch (invTab) {
+        case 0:
+          i_type = 'shirt';
+          break;
 
-      case 1:
-        i_type = 'shoes';
-        break;
+        case 1:
+          i_type = 'shoes';
+          break;
 
-      case 2:
-        i_type = 'skin'
+        case 2:
+          i_type = 'skin'
+          break;
+
+        default:
+          // probably should make this something else later
+          i_type = 'error'
+      }
+
+      // make a new array with just those items
+      let tab_items = itemData.filter((item) => item.item_type === i_type);
+
+      // map those items into some html
+      const item_grid = tab_items.map((item, idx) =>
+        <div className={styles.inventoryGridItem} key={'GI_' + idx}>
+          <div className={styles.inventoryItemBox} key={idx}
+            style={{ backgroundColor: item.owned ? "white" : "grey" }}
+            onClick={() => updatePurchaseBox(true, item)} />
+          <p className={styles.inventoryGridItemText} key={'Text_' + idx}>
+            {item.name}
+          </p>
+        </div>
+      );
+
+      return item_grid;
     }
-
-    // make a new array with just those items
-    let tab_items = itemManifest.filter((item) => item.item_type === i_type);
-
-    // map those items into some html
-    const item_grid = tab_items.map((item, idx) =>
-      <div className={styles.inventoryGridItem}>
-        <div className={styles.inventoryItemBox} />
-        <p className={styles.inventoryGridItemText} key={idx}>
-          {item.name}
-        </p>
-      </div>
-    );
-
-    return item_grid;
   }
 
   return (
@@ -142,15 +131,17 @@ export default function InventoryMenu() {
               <CurrencyIcon />
             </div>
             <p className={styles.inventoryCurrencyCount}>
-              0000
-              {/* TODO: get user currency*/}
+              {userBalance}
             </p>
-
           </div>
         </div>
 
         <div className={styles.inventoryGrid}>
           {buildItemGrid()}
+        </div>
+
+        <div className={styles.inventoryPurchaseDiv}>
+          {showPurchase ? purchaseBox() : null}
         </div>
       </div >
     </>

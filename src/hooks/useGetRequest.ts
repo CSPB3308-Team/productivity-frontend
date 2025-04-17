@@ -1,5 +1,6 @@
 import { useState, useCallback } from 'react';
 import { backendUrl } from '../config';
+import AuthService from '../utils/Auth';
 
 /**
  * Custom hook for making GET requests to the backend with query parameters.
@@ -13,7 +14,7 @@ import { backendUrl } from '../config';
  *          loading - Whether the request is currently in progress.
  *          sendRequest - The function to trigger the request.
  */
-const useGetRequest = <TResponse>(endpoint: string) => {
+const useGetRequest = <TResponse>(endpoint: string, auth?: boolean) => {
   const [data, setData] = useState<TResponse | null>(null);
   const [error, setError] = useState<Error | null>(null);
   const [loading, setLoading] = useState(false);
@@ -30,12 +31,18 @@ const useGetRequest = <TResponse>(endpoint: string) => {
 
       const queryString = new URLSearchParams(queryParams).toString();
 
+      var header = {
+        'Content-Type': 'application/json'
+      }
+
+      if (auth) {
+        header.Authorization = 'Bearer ' + AuthService.getToken();
+      }
+
       try {
         const response = await fetch(`${backendUrl}/${endpoint}?${queryString}`, {
           method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: header,
         });
         if (!response.ok) {
           const errorText = await response.text();

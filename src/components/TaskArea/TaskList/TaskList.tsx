@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import useGetRequest from '../../../hooks/useGetRequest';
 import { TaskData, TaskType } from '../../../types';
 import styles from './TaskList.module.css';
 import TaskBox from './TaskBox';
-import AuthService from '../../../utils/Auth';
-import { AuthUserData } from '../../../types';
+
+import { UserContext } from '../../../pages/TaskPage/TaskPage';
 
 type TaskListProps = {
   taskType: TaskType;
@@ -12,18 +12,11 @@ type TaskListProps = {
 };
 
 const TaskList: React.FC<TaskListProps> = ({ taskType, addingTask }) => {
+
+  const user = useContext(UserContext);
+
   const [tasks, setTasks] = useState<TaskData[] | null>(null);
   const { data, error, loading, sendRequest } = useGetRequest<TaskData[]>('tasks');
-  const [user, setUser] = useState<AuthUserData | null>(null);
-
-  // Check if user is logged in
-  useEffect(() => {
-    async function getUser() {
-      const loggedInUser = AuthService.getUser();
-      setUser(loggedInUser);
-    }
-    getUser();
-  }, []);
 
   // Initially get the tasks
   useEffect(() => {
