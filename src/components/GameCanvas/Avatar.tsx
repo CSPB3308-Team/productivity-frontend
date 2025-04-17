@@ -1,15 +1,14 @@
 import { useGLTF } from '@react-three/drei'
-import * as THREE from 'three'  
+import * as THREE from 'three'
 
 export function Avatar(props: any) {
-  const { nodes, materials } = useGLTF('/Capsule.glb')
+  const { nodes, materials } = useGLTF('/Avatar.glb')
+  
   return (
-    <group {...props} dispose={null}>
-      <mesh
-        castShadow
-        geometry={(nodes.Mball001 as THREE.Mesh).geometry}
-        material={(nodes.Mball001 as THREE.Mesh).material}
-      />
+    <group {...props} name={"Avatar"} dispose={null}>
+      <group position={[-0.198, 2.892, 0.826]} rotation={[0, 0, Math.PI]}>
+        <primitive object={nodes.Spine} />
+      </group>
     </group>
   );
 }
