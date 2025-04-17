@@ -4,6 +4,7 @@ import CurrencyIcon from './CurrencyIcon';
 import useGetRequest from '../../hooks/useGetRequest';
 import { AuthUserData, ItemUserData } from '../../types';
 import { BalanceContext } from '../../pages/TaskPage/TaskPage';
+import { select } from 'three/tsl';
 
 interface ItemInputs {
   user?: AuthUserData
@@ -65,8 +66,19 @@ export default function InventoryMenu(inData: ItemInputs) {
   }
 
   function purchaseSelectedItem() {
-    // TODO: post request to actually buy the thing
-    setUserBalance((userBalance as number) - (selectedItem as ItemUserData).item_cost)
+    if (itemData && selectedItem) {
+      // TODO: post request to actually buy the thing
+      setUserBalance((userBalance as number) - (selectedItem as ItemUserData).item_cost);
+      setShowPurchase(false);
+
+      let tempItems = itemData;
+      let selection = tempItems.find((item) => item.id == selectedItem.id);
+      
+      Object.assign(selection as ItemUserData, {...selectedItem, owned: true})
+      
+      setItemData(tempItems);
+
+    }
   }
 
   // Generate the item inventory based on the currently selected tab
