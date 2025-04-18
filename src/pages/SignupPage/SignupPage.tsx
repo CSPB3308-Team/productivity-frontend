@@ -36,7 +36,7 @@ const SignupPage = () => {
         <button type='button' onClick={() => AuthService.logout()}>
           Log out
         </button>
-        <button type='button' onClick={() => navigate('/')}>
+        <button type='button' onClick={() => navigate('/productivity-frontend')}>
           Back home
         </button>
       </>

@@ -21,7 +21,7 @@ const useGetRequest = <TResponse>(endpoint: string, auth?: boolean) => {
 
   /**
    * Sends a GET request using the specified query parameters.
-   * 
+   *
    * @param queryParams - An object representing the query parameters.
    */
   const sendRequest = useCallback(
@@ -29,20 +29,24 @@ const useGetRequest = <TResponse>(endpoint: string, auth?: boolean) => {
       setLoading(true);
       setError(null);
 
-      const queryString = new URLSearchParams(queryParams).toString();
+      // Don't need to send 'Content-Type' since there is no body.
+      // DO need to send 'Authorization' for protected endpoints.
+      let header = undefined;
+      if (auth) header = { Authorization: 'Bearer ' + AuthService.getToken() };
 
-      var header = {
-        'Content-Type': 'application/json'
-      }
-
-      if (auth) {
-        header.Authorization = 'Bearer ' + AuthService.getToken();
+      // Don't append the question mark if there are no query params
+      let fullUrl;
+      if (Object.keys(queryParams).length === 0) {
+        fullUrl = `${backendUrl}/${endpoint}`;
+      } else {
+        const queryString = new URLSearchParams(queryParams).toString();
+        fullUrl = `${backendUrl}/${endpoint}?${queryString}`;
       }
 
       try {
-        const response = await fetch(`${backendUrl}/${endpoint}?${queryString}`, {
+        const response = await fetch(fullUrl, {
           method: 'GET',
-          headers: header,
+          ...(header && { headers: header }), // Only add the header if necessary (for auth)
         });
         if (!response.ok) {
           const errorText = await response.text();
@@ -56,7 +60,7 @@ const useGetRequest = <TResponse>(endpoint: string, auth?: boolean) => {
         setLoading(false);
       }
     },
-    [endpoint],
+    [endpoint, auth],
   );
 
   return { data, error, loading, sendRequest };

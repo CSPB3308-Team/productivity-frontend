@@ -1,8 +1,8 @@
-import { useGLTF } from '@react-three/drei'
-import * as THREE from 'three'  
+import { useGLTF } from '@react-three/drei';
+import * as THREE from 'three';
 
 export function RoomFloor(props: any) {
-  const { nodes, materials } = useGLTF('/RoomFloor.glb')
+  const { nodes, materials } = useGLTF('/productivity-frontend/RoomFloor.glb');
   return (
     <group {...props} dispose={null}>
       <mesh
@@ -12,7 +12,7 @@ export function RoomFloor(props: any) {
         material={materials.Material}
       />
     </group>
-  )
+  );
 }
 
-useGLTF.preload('/RoomFloor.glb')
+useGLTF.preload('/productivity-frontend/RoomFloor.glb');
