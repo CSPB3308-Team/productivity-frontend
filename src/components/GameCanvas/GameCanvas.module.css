@@ -1,14 +1,24 @@
 .gameCanvasDiv {
   position: relative;
-  margin: auto;
-  height: 90vmin;
-  outline: 2px solid red;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 
 .gameCanvas {
-  height: inherit;
-  min-width: 900px;
-  aspect-ratio: 1.2/1;
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  aspect-ratio: 1.2 / 1;  /* Controls shape */
+  outline: 2px solid red;
+}
+
+/* Full height on parent container */
+html, body, #root, .taskPageDiv, .gameAreaDiv {
+  height: 100%;
 }
 
 /* INVENTORY MENU */

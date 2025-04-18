@@ -6,6 +6,9 @@ import GameCanvas from '../../components/GameCanvas/GameCanvas';
 import TaskArea from '../../components/TaskArea/TaskArea';
 import styles from './TaskPage.module.css';
 import useGetRequest from '../../hooks/useGetRequest';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 interface BalanceContextType {
   userBalance: number | null;
@@ -58,12 +61,19 @@ const TaskPage = () => {
   return (
     <UserContext.Provider value={user}>
       <BalanceContext.Provider value={{ userBalance, setUserBalance }}>
-        <div className={styles.taskPageDiv}>
-          <div className={styles.gameAreaDiv}>
-            <GameCanvas />
-          </div>
-          <TaskArea />
+        <Container fluid>
+    <Row className="g-0 container">
+      <Col lg={10} md={9} sm={12} className={styles.gameCol}>
+        <div className={styles.gameWrapper}>
+          <GameCanvas />
         </div>
+      </Col>
+      <Col lg={2} md={3} sm={12} className={styles.taskCol}>
+        <TaskArea />
+      </Col>
+    </Row>
+  </Container>
+
       </BalanceContext.Provider>
     </UserContext.Provider>
   );

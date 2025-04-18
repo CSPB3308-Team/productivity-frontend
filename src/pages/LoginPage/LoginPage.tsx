@@ -3,6 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import AuthService from '../../utils/Auth';
 import usePostRequest from '../../hooks/usePostRequest';
 import { AuthUserData } from '../../types';
+import Container from 'react-bootstrap/Container';
+import Form from 'react-bootstrap/Form';
+
 
 // TO DO: This is just a quick and dirty login, add style and such
 const LoginPage = () => {
@@ -12,6 +15,7 @@ const LoginPage = () => {
   const [user, setUser] = useState<AuthUserData | null>(null);
   const navigate = useNavigate();
   const { sendRequest, loading } = usePostRequest<{ token: string }>('login');
+  
 
   // Check if user is already logged in
   useEffect(() => {
@@ -64,18 +68,18 @@ const LoginPage = () => {
 
   // Show login form if user is NOT logged in
   return (
-    <>
+    <Container>
       <h2>Login</h2>
 
       {error && <p>{error}</p>}
 
-      <form onSubmit={handleSubmit}>
-        <label>
+      <Form onSubmit={handleSubmit} className='mb-2 p-2 bg-body-tertiary'>
+        <Form.Label>
           Email:{' '}
           <input type='email' value={email} onChange={(e) => setEmail(e.target.value)} required />
-        </label>
+        </Form.Label>
         <br />
-        <label>
+        <Form.Label>
           Password:{' '}
           <input
             type='password'
@@ -83,18 +87,18 @@ const LoginPage = () => {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-        </label>
+        </Form.Label>
         <br />
-        <button type='submit' disabled={loading}>
+        <button type='submit' className="btn btn-primary mb-1" disabled={loading}>
           {loading ? 'Logging in...' : 'Login'}
         </button>
-      </form>
+      </Form>
       {/* Direct unregistered users to the signup page */}
       <h4>No account?</h4>
-      <button type='button' onClick={() => navigate('/signup')}>
+      <button type='button' className="btn btn-info mb-1" onClick={() => navigate('/signup')}>
         Sign up
       </button>
-    </>
+    </Container>
   );
 };
 

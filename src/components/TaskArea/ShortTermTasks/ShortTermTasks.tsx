@@ -3,7 +3,7 @@ import styles from './ShortTermTasks.module.css';
 
 const ShortTermTasks: React.FC<{ addingTask: boolean }> = ({ addingTask }) => {
   return (
-    <div className={`${styles.shortTermTasksDiv} placeholderDiv`}>
+    <div className='flex flex-column'>
       <h3>Short-Term Tasks</h3>
       <TaskList taskType='short-term' addingTask={addingTask} />
       <hr style={{ width: '100%' }} />

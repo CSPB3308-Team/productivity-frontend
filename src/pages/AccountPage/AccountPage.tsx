@@ -4,6 +4,8 @@ import { AuthUserData, UserInfo, UserInfoField } from '../../types';
 import { useEffect, useState } from 'react';
 import InfoUpdateForm from './InfoUpdateForm';
 import DeleteAccount from './DeleteAccount';
+import Container from 'react-bootstrap/Container';
+
 
 const AccountPage = () => {
   const [user, setUser] = useState<AuthUserData | UserInfo | null>(null);
@@ -25,7 +27,7 @@ const AccountPage = () => {
 
   return (
     user && (
-      <>
+      <Container>
         <h2>Hello, {user.first_name}!</h2>
         <br />
         {updatingInfo ? (
@@ -36,35 +38,35 @@ const AccountPage = () => {
             setUser={setUser}
           />
         ) : (
-          <>
-            <button type='button' onClick={() => setUpdatingInfo('username')}>
+          <Container>
+            <button className="btn btn-secondary mb-1" type='button' onClick={() => setUpdatingInfo('username')}>
               Change username
             </button>
             <br />
-            <button type='button' onClick={() => setUpdatingInfo('first_name')}>
+            <button className="btn btn-secondary mb-1" type='button' onClick={() => setUpdatingInfo('first_name')}>
               Change first name
             </button>
             <br />
-            <button type='button' onClick={() => setUpdatingInfo('last_name')}>
+            <button className="btn btn-secondary mb-1" type='button' onClick={() => setUpdatingInfo('last_name')}>
               Change last name
             </button>
             <br />
-            <button type='button' onClick={() => setUpdatingInfo('email')}>
+            <button className="btn btn-secondary mb-1" type='button' onClick={() => setUpdatingInfo('email')}>
               Change email
             </button>
             <br />
-            <button type='button' onClick={() => setUpdatingInfo('password')}>
+            <button className="btn btn-secondary mb-1" type='button' onClick={() => setUpdatingInfo('password')}>
               Change password
             </button>
             <br />
-            <button type='button' onClick={() => AuthService.logout()}>
+            <button type='button' className="btn btn-primary mb-1" onClick={() => AuthService.logout()}>
               Log out
             </button>
             <br />
             <DeleteAccount token={token} />
-          </>
+          </Container>
         )}
-      </>
+      </Container>
     )
   );
 };

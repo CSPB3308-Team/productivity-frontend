@@ -17,7 +17,9 @@ const TaskList: React.FC<TaskListProps> = ({ taskType, addingTask }) => {
 
   const [tasks, setTasks] = useState<TaskData[] | null>(null);
   const { data, error, loading, sendRequest } = useGetRequest<TaskData[]>('tasks');
+  const [showCompleted, setShowCompleted] = useState(false);
 
+  
   // Initially get the tasks
   useEffect(() => {
     if (user) sendRequest({ task_type: taskType, user_id: String(user.id) });
@@ -29,17 +31,42 @@ const TaskList: React.FC<TaskListProps> = ({ taskType, addingTask }) => {
     if (data) setTasks(data);
   }, [data, setTasks]);
 
+  // Sort between complete and
+  const incompleteTasks = tasks?.filter((task) => !task.task_complete) || [];
+  const completedTasks = tasks?.filter((task) => task.task_complete) || [];
+
   return (
     <>
       {loading && <p>Loading...</p>}
       {error && <p>Failed to get tasks: {error.message}</p>}
       {tasks && (
-        <div className={styles.taskListDiv}>
-          {tasks.map((task) => (
-            <TaskBox key={task.id} task={task} />
-          ))}
-        </div>
-      )}
+  <div className={styles.taskListDiv}>
+    {/* Incomplete tasks */}
+    {incompleteTasks.map((task) => (
+      <TaskBox key={task.id} task={task} />
+    ))}
+
+    {/* Drawer Toggle Button */}
+    {completedTasks.length > 0 && (
+  <div className={styles.completedDrawerToggle}>
+    <button className='btn btn-tertiary show-complete-btn' onClick={() => setShowCompleted(!showCompleted)}>
+      {showCompleted ? 'Hide' : 'Show'} Completed Tasks ({completedTasks.length})
+    </button>
+  </div>
+)}
+
+
+    {/* Collapsible drawer for completed tasks */}
+    {showCompleted && (
+      <div className={styles.completedDrawer}>
+        {completedTasks.map((task) => (
+          <TaskBox key={task.id} task={task} completed />
+        ))}
+      </div>
+    )}
+  </div>
+)}
+
     </>
   );
 };

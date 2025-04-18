@@ -3,6 +3,8 @@ import AuthService from '../../utils/Auth';
 import { useState } from 'react';
 import usePostPutPatchDelete from '../../hooks/usePostPutPatchDelete';
 import { UserInfo, SignupResponse } from '../../types';
+import Container from 'react-bootstrap/Container';
+import Form from 'react-bootstrap/Form';
 
 const SignupPage = () => {
   const navigate = useNavigate();
@@ -46,19 +48,19 @@ const SignupPage = () => {
   // Show the sign up form if the user hasn't signed up yet
   if (!data) {
     return (
-      <form onSubmit={handleSubmit}>
+      <Form onSubmit={handleSubmit} className='mb-2 p-2 bg-body-tertiary'>
         <h2>Create a new account</h2>
-        <label>
+        <Form.Label>
           First name:{' '}
           <input value={firstName} onChange={(e) => setFirstName(e.target.value)} required />
-        </label>
+        </Form.Label>
         <br />
-        <label>
+        <Form.Label>
           Last name:{' '}
           <input value={lastName} onChange={(e) => setLastName(e.target.value)} required />
-        </label>
+        </Form.Label>
         <br />
-        <label>
+        <Form.Label>
           Username:{' '}
           <input
             value={username}
@@ -66,14 +68,14 @@ const SignupPage = () => {
             required
             autoFocus
           />
-        </label>
+        </Form.Label>
         <br />
-        <label>
+        <Form.Label>
           Email:{' '}
           <input type='email' value={email} onChange={(e) => setEmail(e.target.value)} required />
-        </label>
+        </Form.Label>
         <br />
-        <label>
+        <Form.Label>
           Password:{' '}
           <input
             type='password'
@@ -81,10 +83,10 @@ const SignupPage = () => {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-        </label>
+        </Form.Label>
         <br />
-        <button type='submit'>Sign up</button>
-      </form>
+        <button className="btn btn-primary mb-1" type='submit'>Sign up</button>
+      </Form>
     );
   }
 
@@ -94,7 +96,7 @@ const SignupPage = () => {
   return (
     <>
       <h3>Successfully created account</h3>
-      <button type='button' onClick={() => navigate('/login')}>
+      <button className="btn btn-primary mb-1" type='button' onClick={() => navigate('/login')}>
         Log in
       </button>
     </>

@@ -5,6 +5,7 @@ import LoginPage from './pages/LoginPage/LoginPage';
 import SignupPage from './pages/SignupPage/SignupPage';
 import AccountPage from './pages/AccountPage/AccountPage';
 import MainLayout from './layouts/MainLayout';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const App = () => {
   return (
