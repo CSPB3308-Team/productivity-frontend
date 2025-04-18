@@ -45,7 +45,7 @@ const TaskPage = () => {
     if (user) {
       sendRequest({});
     }
-  }, [user, sendRequest, data]);
+  }, [user, sendRequest]);
 
   // Add initial balance to state
   useEffect(() => {
