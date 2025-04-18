@@ -4,7 +4,6 @@ import CurrencyIcon from './CurrencyIcon';
 import useGetRequest from '../../hooks/useGetRequest';
 import { AuthUserData, ItemUserData } from '../../types';
 import { BalanceContext } from '../../pages/TaskPage/TaskPage';
-import { select } from 'three/tsl';
 
 interface ItemInputs {
   user?: AuthUserData
@@ -15,7 +14,7 @@ export default function InventoryMenu(inData: ItemInputs) {
   const { userBalance, setUserBalance } = useContext(BalanceContext);
 
   // GET Request: item data from database
-  const { data, error, loading, sendRequest } = useGetRequest<ItemUserData[]>('items');
+  const { data, sendRequest } = useGetRequest<ItemUserData[]>('items');
   const [itemData, setItemData] = useState<ItemUserData[] | null>(null);  // stores item manifest
   const [invTab, setInvTab] = useState(0);                                // handle switching inventory tabs
   const [tabColor, setTabColor] = useState([true, false, false]);         // manage styles to change color on selection
@@ -28,7 +27,7 @@ export default function InventoryMenu(inData: ItemInputs) {
   // get initial item table
   useEffect(() => {
     if (user) sendRequest({ user_id: String(user.id) });
-  }, [sendRequest]);
+  }, [sendRequest, user]);
 
   // Add the items to local state
   useEffect(() => {
@@ -38,7 +37,7 @@ export default function InventoryMenu(inData: ItemInputs) {
   // switch the active tab for filtering and styling
   function updateInvTab(invType: number) {
     console.log("Item Data", data);
-    let tabTemp = tabColor;
+    const tabTemp = tabColor;
     tabTemp[invTab] = false;
     tabTemp[invType] = true;
 
@@ -71,8 +70,8 @@ export default function InventoryMenu(inData: ItemInputs) {
       setUserBalance((userBalance as number) - (selectedItem as ItemUserData).item_cost);
       setShowPurchase(false);
 
-      let tempItems = itemData;
-      let selection = tempItems.find((item) => item.id == selectedItem.id);
+      const tempItems = itemData;
+      const selection = tempItems.find((item) => item.id == selectedItem.id);
       
       Object.assign(selection as ItemUserData, {...selectedItem, owned: true})
       
@@ -105,7 +104,7 @@ export default function InventoryMenu(inData: ItemInputs) {
       }
 
       // make a new array with just those items
-      let tab_items = itemData.filter((item) => item.item_type === i_type);
+      const tab_items = itemData.filter((item) => item.item_type === i_type);
 
       // map those items into some html
       const item_grid = tab_items.map((item, idx) =>

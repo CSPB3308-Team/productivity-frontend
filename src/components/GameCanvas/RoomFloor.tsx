@@ -2,7 +2,7 @@ import { useGLTF } from '@react-three/drei'
 import * as THREE from 'three'  
 
 export function RoomFloor(props: any) {
-  const { nodes, materials } = useGLTF('/RoomFloor.glb')
+  const { nodes, materials } = useGLTF('/taskagotchi/RoomFloor.glb')
   return (
     <group {...props} dispose={null}>
       <mesh
@@ -15,4 +15,4 @@ export function RoomFloor(props: any) {
   )
 }
 
-useGLTF.preload('/RoomFloor.glb')
+useGLTF.preload('/taskagotchi/RoomFloor.glb')

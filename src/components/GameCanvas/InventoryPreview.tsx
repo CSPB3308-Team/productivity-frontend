@@ -34,7 +34,7 @@ export default function InventoryPreview(dress: DressUp) {
 
       // Offset clone's position so it's well-framed for dressing up
       // create a vector to hold the clone's distance from the camera
-      let avPos = new THREE.Vector3(AV_POS_X, AV_POS_Y, AV_POS_Z);
+      const avPos = new THREE.Vector3(AV_POS_X, AV_POS_Y, AV_POS_Z);
 
       // convert the local displacement to the world reference frame
       camera.localToWorld(avPos);
@@ -45,7 +45,7 @@ export default function InventoryPreview(dress: DressUp) {
       av_c.position.z = avPos.z;
 
       // Match the clone's rotation to the camera's rotation
-      let camQuat = new THREE.Quaternion();
+      const camQuat = new THREE.Quaternion();
       camera.getWorldQuaternion(camQuat);
       av_c.applyQuaternion(camQuat);
 
@@ -69,7 +69,7 @@ export default function InventoryPreview(dress: DressUp) {
       dressLight1.decay = 0;
 
       // Set the light's offset relative to the camera/clone
-      let lightPos1 = new THREE.Vector3(10, -5, 5);
+      const lightPos1 = new THREE.Vector3(10, -5, 5);
       camera.localToWorld(lightPos1);
 
       dressLight1.position.x = lightPos1.x;
@@ -90,7 +90,7 @@ export default function InventoryPreview(dress: DressUp) {
       dressLight2.intensity = 5;
       dressLight2.decay = 0;
 
-      let lightPos2 = new THREE.Vector3(-10, 5, 5);
+      const lightPos2 = new THREE.Vector3(-10, 5, 5);
       camera.localToWorld(lightPos2);
 
       dressLight2.position.x = lightPos2.x;

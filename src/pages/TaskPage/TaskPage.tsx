@@ -12,16 +12,15 @@ interface BalanceContextType {
   setUserBalance: Dispatch<SetStateAction<number | null>>;
 }
 
-
 // lets us pass user data to all child components
 export const UserContext = createContext<AuthUserData | null>(null);
 export const BalanceContext = createContext<BalanceContextType>({
   userBalance: null,
-  setUserBalance: () => { }
+  setUserBalance: () => {},
 });
 
 const TaskPage = () => {
-  const { data, error, loading, sendRequest } = useGetRequest<BalanceData>('balance', true);
+  const { data, sendRequest } = useGetRequest<BalanceData>('balance', true);
   const navigate = useNavigate();
 
   const [user, setUser] = useState<AuthUserData | null>(null);
@@ -45,14 +44,12 @@ const TaskPage = () => {
   useEffect(() => {
     if (user) {
       sendRequest({});
-      console.log('Send Request:', data)
     }
-  }, [user, sendRequest]);
+  }, [user, sendRequest, data]);
 
   // Add initial balance to state
   useEffect(() => {
     if (data) setUserBalance(data.balance);
-    console.log('Balance Data: ', data)
   }, [data, setUserBalance]);
 
   return (
