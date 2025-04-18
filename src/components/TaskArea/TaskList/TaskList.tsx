@@ -3,6 +3,8 @@ import useGetRequest from '../../../hooks/useGetRequest';
 import { TaskData, TaskType } from '../../../types';
 import styles from './TaskList.module.css';
 import TaskBox from './TaskBox';
+import Spinner from 'react-bootstrap/Spinner';
+
 
 import { UserContext } from '../../../pages/TaskPage/TaskPage';
 
@@ -37,7 +39,8 @@ const TaskList: React.FC<TaskListProps> = ({ taskType, addingTask }) => {
 
   return (
     <>
-      {loading && <p>Loading...</p>}
+      {loading && <Spinner animation="border" variant="primary" />
+      }
       {error && <p>Failed to get tasks: {error.message}</p>}
       {tasks && (
   <div className={styles.taskListDiv}>
