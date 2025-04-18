@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 import TaskPage from './pages/TaskPage/TaskPage';
 import LoginPage from './pages/LoginPage/LoginPage';
@@ -8,7 +8,7 @@ import MainLayout from './layouts/MainLayout';
 
 const App = () => {
   return (
-    <Router>
+    <BrowserRouter basename='/taskagotchi'>
       <Routes>
         <Route element={<MainLayout />}>
           <Route path='/' element={<TaskPage />} />
@@ -17,7 +17,7 @@ const App = () => {
           <Route path='/account' element={<AccountPage />} />
         </Route>
       </Routes>
-    </Router>
+    </BrowserRouter>
   );
 };
 
