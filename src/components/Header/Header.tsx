@@ -6,7 +6,7 @@ const Header = () => {
     <header className='bg-primary text-white d-flex mb-4'>
       <div className='container d-flex flex-row justify-content-sm-between  align-items-center'>
         <img
-          src="/taskagotchi_icon_transparent.ico"
+          src="taskagotchi_icon_transparent.ico"
           alt="Taskagotchi Egg Icon"
           className={styles.logo}
         />
