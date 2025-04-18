@@ -4,7 +4,7 @@ import styles from './Header.module.css';
 const Header = () => {
   return (
     <header className='bg-primary text-white d-flex mb-4'>
-      <div className='container d-flex flex-row justify-content-sm-between  align-items-center'>
+      <div className='container d-flex flex-row justify-content-between  align-items-center p-2'>
         <img
           src="taskagotchi_icon_transparent.ico"
           alt="Taskagotchi Egg Icon"
@@ -12,7 +12,7 @@ const Header = () => {
         />
         <h1>Taskagotchi</h1>
       <nav>
-      <ul className={`${styles.navList} list-unstyled d-flex align-items-center justify-content-sm-between
+      <ul className={`${styles.navList} list-unstyled d-flex align-items-center justify-content-evenly m-0
 `}>
           <li>
             <Link to='/'>Home</Link>
