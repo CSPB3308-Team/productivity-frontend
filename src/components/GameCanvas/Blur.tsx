@@ -2,7 +2,7 @@ import { useGLTF } from '@react-three/drei'
 import * as THREE from 'three'
 
 export function Blur(props: any) {
-  const { nodes } = useGLTF('/taskagotchi/RoomFloor.glb')
+  const { nodes } = useGLTF('/productivity-frontend/RoomFloor.glb')
 
   // create a material texture that emulates a blur effect
   function blurMat() {
@@ -27,4 +27,4 @@ export function Blur(props: any) {
   )
 }
 
-useGLTF.preload('/taskagotchi/RoomWall.glb')
+useGLTF.preload('/productivity-frontend/RoomWall.glb')

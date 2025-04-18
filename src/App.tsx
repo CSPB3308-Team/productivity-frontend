@@ -8,7 +8,7 @@ import MainLayout from './layouts/MainLayout';
 
 const App = () => {
   return (
-    <BrowserRouter basename='/taskagotchi'>
+    <BrowserRouter basename='/productivity-frontend'>
       <Routes>
         <Route element={<MainLayout />}>
           <Route path='/' element={<TaskPage />} />

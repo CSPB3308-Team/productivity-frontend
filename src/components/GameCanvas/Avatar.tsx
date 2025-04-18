@@ -1,7 +1,7 @@
 import { useGLTF } from '@react-three/drei'
 
 export function Avatar(props: any) {
-  const { nodes } = useGLTF('/taskagotchi/Avatar.glb')
+  const { nodes } = useGLTF('/productivity-frontend/Avatar.glb')
   
   return (
     <group {...props} name={"Avatar"} dispose={null}>
@@ -12,4 +12,4 @@ export function Avatar(props: any) {
   );
 }
 
-useGLTF.preload('/taskagotchi/Capsule.glb')
+useGLTF.preload('/productivity-frontend/Capsule.glb')
