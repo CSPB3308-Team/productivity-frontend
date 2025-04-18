@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 import TaskPage from './pages/TaskPage/TaskPage';
 import LoginPage from './pages/LoginPage/LoginPage';
@@ -9,7 +9,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 const App = () => {
   return (
-    <Router>
+    <BrowserRouter basename='/productivity-frontend'>
       <Routes>
         <Route element={<MainLayout />}>
           <Route path='/' element={<TaskPage />} />
@@ -18,7 +18,7 @@ const App = () => {
           <Route path='/account' element={<AccountPage />} />
         </Route>
       </Routes>
-    </Router>
+    </BrowserRouter>
   );
 };
 

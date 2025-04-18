@@ -18,7 +18,7 @@ import InventoryMenu from './InventoryMenu';
 import InventoryPreview from './InventoryPreview';
 
 export default function GameCanvas() {
-  var devMode = false;
+  const devMode = false;
 
   const user = useContext(UserContext);
 
@@ -80,7 +80,7 @@ export default function GameCanvas() {
 
   // Testing changing the color / opacity of an object
   const colorChange = (event: any) => {
-    var new_mat = event.object.material.clone();
+    const new_mat = event.object.material.clone();
     new_mat.color.setHex(0xA3C197);
     new_mat.transparent = true; // transparent must be "true" for opacity to do anything
     new_mat.opacity = Number(!event.object.material.opacity); // switches opacity between 0 and 1
