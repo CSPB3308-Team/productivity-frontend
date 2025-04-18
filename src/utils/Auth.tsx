@@ -28,12 +28,12 @@ class AuthService {
 // Sets the token in local storage, then redirects
   login(idToken: string): void {
     localStorage.setItem("id_token", idToken);
-    window.location.assign("/");
+    window.location.assign("/productivity-frontend");
   }
 // Removes the token from local storage, then redirects
 logout(): void {
     localStorage.removeItem("id_token");
-    window.location.assign("/");
+    window.location.assign("/productivity-frontend");
   }
 }
 

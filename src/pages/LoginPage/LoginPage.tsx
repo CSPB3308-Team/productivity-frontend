@@ -36,7 +36,7 @@ const LoginPage = () => {
       AuthService.login(response.token);
       setUser(AuthService.getUser());
       // Redirect to home
-      navigate('/');
+      navigate('/productivity-frontend');
     } else {
       setError('Invalid email or password');
     }
