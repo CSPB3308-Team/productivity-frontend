@@ -63,7 +63,7 @@ const TaskList: React.FC<TaskListProps> = ({ taskType, addingTask }) => {
     {showCompleted && (
       <div className={styles.completedDrawer}>
         {completedTasks.map((task) => (
-          <TaskBox key={task.id} task={task} completed />
+          <TaskBox key={task.id} task={task} />
         ))}
       </div>
     )}

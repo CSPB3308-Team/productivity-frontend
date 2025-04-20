@@ -3,7 +3,6 @@ import AuthService from '../../utils/Auth';
 import { useState } from 'react';
 import usePostPutPatchDelete from '../../hooks/usePostPutPatchDelete';
 import { UserInfo, SignupResponse } from '../../types';
-import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 
 const SignupPage = () => {
