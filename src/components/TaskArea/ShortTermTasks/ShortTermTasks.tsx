@@ -1,5 +1,4 @@
 import TaskList from '../TaskList/TaskList';
-import styles from './ShortTermTasks.module.css';
 
 const ShortTermTasks: React.FC<{ addingTask: boolean }> = ({ addingTask }) => {
   return (
