@@ -28,4 +28,4 @@ export function Blur(props: any) {
   )
 }
 
-useGLTF.preload('/productivity-frontend/RoomWall.glb')
+useGLTF.preload('/productivity-frontend/RoomFloor.glb')
