@@ -1,6 +1,5 @@
 import { useGLTF } from '@react-three/drei'
 import * as THREE from 'three'
-import { metalness } from 'three/tsl';
 
 export function Blur(props: any) {
   const { nodes } = useGLTF('/productivity-frontend/RoomFloor.glb')
@@ -29,4 +28,4 @@ export function Blur(props: any) {
   )
 }
 
-useGLTF.preload('/productivity-frontend/RoomFloor.glb')
+useGLTF.preload('/productivity-frontend/RoomWall.glb')

@@ -1,11 +1,12 @@
 import { useContext, useEffect, useState } from 'react'
 import styles from '../GameCanvas.module.css';
 import CurrencyIcon from './CurrencyIcon';
-import { AuthUserData, ItemUserData } from '../../../types';
+import { AuthUserData, ItemAddPost, ItemUserData, SignupResponse } from '../../../types';
 import { BalanceContext } from '../../../pages/TaskPage/TaskPage';
 import AvatarManager from '../AvatarManager';
 import useGetRequest from '../../../hooks/useGetRequest';
-import usePostRequest from '../../../hooks/usePostRequest';
+import usePostPutPatchDelete from '../../../hooks/usePostPutPatchDelete';
+import AuthService from '../../../utils/Auth';
 
 interface ItemInputs {
   user: AuthUserData;
@@ -19,7 +20,11 @@ export default function InventoryMenu(input: ItemInputs) {
 
   // GET Request: item data from database
   const { data, error, loading, sendRequest } = useGetRequest<ItemUserData[]>('items');
-  const post = usePostRequest<{ token: string }>('items', true);
+  const post = usePostPutPatchDelete<ItemAddPost, SignupResponse>(
+    'items',
+    'POST', 
+    { Authorization: `Bearer ${AuthService.getToken()}` }
+  );
 
   const [itemData, setItemData] = useState<ItemUserData[] | null>(null);  // stores item manifest
   const [invTab, setInvTab] = useState(0);                                // handle switching inventory tabs
@@ -58,13 +63,7 @@ export default function InventoryMenu(input: ItemInputs) {
     // Send purchase request
     if (user) {
       if (selectedItem) {
-        const response = await post.sendRequest({ user_id: String(user.id), item_id: String(selectedItem.id) });
-
-        if (response && response.token) {
-          console.log('Received Token:', response.token);
-        } else {
-          console.log(response);
-        }
+        await post.sendRequest({ user_id: String(user.id), item_id: String(selectedItem.id) });
       }
     }
   };

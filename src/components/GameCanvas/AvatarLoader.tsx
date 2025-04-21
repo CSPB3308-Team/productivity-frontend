@@ -31,7 +31,7 @@ export default function AvatarLoader(input: avLoad) {
         avLoading.current = true; // set this first to prevent re-runs
 
         const loader = new GLTFLoader()
-        const gltf = await loader.loadAsync('Avatar.glb');
+        const gltf = await loader.loadAsync('/productivity-frontend/Avatar.glb');
         av = gltf.scene;
         av.name = 'Avatar';
 
