@@ -6,36 +6,44 @@ import styles from './GameCanvas.module.css';
 import { AuthUserData } from '../../types';
 import { UserContext } from '../../pages/TaskPage/TaskPage';
 
-import { Avatar } from './Avatar';
 import { RoomFloor } from './RoomFloor';
 import { RoomWall } from './RoomWall';
 import { CanvasCamera } from './CanvasCamera';
 import { Blur } from './Blur';
 
-import InventoryIcon from './InventoryIcon';
-import InventoryIconHover from './InventoryIconHover';
-import InventoryMenu from './InventoryMenu';
-import InventoryPreview from './InventoryPreview';
+import AvatarLoader from './AvatarLoader';
+import AvatarManager from './AvatarManager';
+
+import ItemManager from './Inventory/ItemManager';
+import InventoryMenu from './Inventory/InventoryMenu';
+import InventoryPreview from './Inventory/InventoryPreview';
+import InventoryIcon from './Inventory/InventoryIcon';
+import InventoryIconHover from './Inventory/InventoryIconHover';
 
 export default function GameCanvas() {
-  const devMode = false;
+  var devMode = false;
 
   const user = useContext(UserContext);
+
+  const itemManager = ItemManager.getInstance(); // holds data / methods for customization items
 
   const CAM_FOV = 25;   // Camera field of view angle (degrees
   const CAM_POS_Y = 32; // Camera Y position
   const CAM_POS_Z = 3;  // Camera Z position
-  const AV_ROT = 20;     // Avatar rotation (degrees)
-  const AV_SCALE = 0.2;  // Avatar scale 
 
   const [camFov, setCamFov] = useState(CAM_FOV);
   const [camY, setCamY] = useState(CAM_POS_Y);
   const [camZ, setCamZ] = useState(CAM_POS_Z);
   const [tempZ, setTempZ] = useState(CAM_POS_Z);
 
+  const [avatarManager, setAvatarManager] = useState<AvatarManager | null>(null);
+  const [cloneManager, setCloneManager] = useState<AvatarManager | null>(null);
+
   const [isLoaded, setIsLoaded] = useState(false);  // used for things that need canvas to be ready
   const [invHover, setInvHover] = useState(false);  // handle inventory icon state
   const [openInv, setOpenInv] = useState(false);    // handle opening inventroy menu
+
+  // TODO: get avatar state from database to set initial state
 
   // handle changing the icon when the user hovers over the inventory div
   function mouseInvActive(active: boolean) {
@@ -72,20 +80,14 @@ export default function GameCanvas() {
     if (open == true) {
       return (
         <>
-          <InventoryMenu user={user as AuthUserData} />
+          <InventoryMenu
+            user={user as AuthUserData}
+            avatarManager={avatarManager as AvatarManager}
+            cloneManager={cloneManager as AvatarManager}
+          />
         </>
       )
     }
-  }
-
-  // Testing changing the color / opacity of an object
-  const colorChange = (event: any) => {
-    const new_mat = event.object.material.clone();
-    new_mat.color.setHex(0xA3C197);
-    new_mat.transparent = true; // transparent must be "true" for opacity to do anything
-    new_mat.opacity = Number(!event.object.material.opacity); // switches opacity between 0 and 1
-    event.object.material = new_mat;
-    event.object.needs_update = true;
   }
 
   // Camera: field of view input box
@@ -167,24 +169,29 @@ export default function GameCanvas() {
       <div className={styles.gameCanvas}>
         <Canvas camera={{ position: [0, camY, camZ] }} onCreated={() => canvasLoaded(true)}>
           <ambientLight intensity={Math.PI / 1.5} />
-          <spotLight position={[0, 10, 0]} angle={0.75} penumbra={1} decay={0} intensity={Math.PI} />
-          <spotLight position={[0, 20, 10]} angle={0.5} penumbra={1} decay={0} intensity={Math.PI / 2} />
-          {/* <pointLight position={[-10, -10, -10]} decay={10} intensity={Math.PI} /> */}
+          <spotLight position={[0, 10, 0]} angle={0.75} penumbra={1} decay={0} intensity={Math.PI / 2} />
+          <spotLight position={[0, 20, 10]} angle={0.5} penumbra={1} decay={0} intensity={Math.PI / 3} />
+          <pointLight position={[-10, -10, -10]} decay={10} intensity={Math.PI} />
 
           <CanvasCamera camFov={camFov} camY={camY} camZ={camZ} />
 
           <RoomFloor />
-          <RoomWall onClick={(e: any) => colorChange(e)} position={[0, 0, -5]} material={new THREE.MeshBasicMaterial({})} />
-          <RoomWall onClick={(e: any) => colorChange(e)} position={[-5, 0, 0]} rotation={[0, THREE.MathUtils.degToRad(90), 0]} />
-          <RoomWall onClick={(e: any) => colorChange(e)} position={[5, 0, 0]} rotation={[0, THREE.MathUtils.degToRad(-90), 0]} />
-          <RoomWall onClick={(e: any) => colorChange(e)} position={[0, 0, 5]} />
-          <Avatar position={[0, 0.01, 0]}
-            rotation={[THREE.MathUtils.degToRad(-AV_ROT), THREE.MathUtils.degToRad(90), 0]}
-            scale={[AV_SCALE, AV_SCALE, AV_SCALE]} />
+          <RoomWall position={[0, 0, -5]} material={new THREE.MeshBasicMaterial({})} />
+          <RoomWall position={[-5, 0, 0]} rotation={[0, THREE.MathUtils.degToRad(90), 0]} />
+          <RoomWall position={[5, 0, 0]} rotation={[0, THREE.MathUtils.degToRad(-90), 0]} />
+          <RoomWall position={[0, 0, 5]} />
+
+          <AvatarLoader itemManager={itemManager as ItemManager} setAvatarManager={setAvatarManager} />
 
           {openInv ? <Blur position={[0, 5, 0]} /> : null}
 
-          <InventoryPreview doDress={openInv} />
+          <InventoryPreview
+            doDress={openInv}
+            itemManager={itemManager as ItemManager}
+            avatarManager={avatarManager as AvatarManager}
+            cloneManager={cloneManager as AvatarManager}
+            setCloneManager={setCloneManager}
+          />
         </Canvas>
       </div>
 

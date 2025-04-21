@@ -1,16 +1,29 @@
-import styles from './GameCanvas.module.css';
+import styles from '../GameCanvas.module.css';
 
-export default function InventoryIcon() {
+export default function InventoryIconHover() {
   return (
     <svg className={styles.inventoryIcon}
       xmlns="http://www.w3.org/2000/svg"
       width={90}
       height={90}
-      viewBox="0 0 181.6 181.6"
+      viewBox="0 0 181.6 191.18"
     >
       <path
-        d="M100 10h90l-4 180h-86zm0 0H10l4 180h86Z"
-        className="UnoptimicedTransforms"
+        d="M10 10h180l-4 180H14Z"
+        style={{
+          fill: "#1e1e1d",
+          fillOpacity: 1,
+          stroke: "#222",
+          strokeWidth: 1.6,
+          strokeLinecap: "round",
+          strokeLinejoin: "round",
+          strokeDasharray: "none",
+          strokeOpacity: 1,
+        }}
+        transform="translate(-9.2 -4.58)"
+      />
+      <path
+        d="M110 5.38 190 10l-4 180-76 4.96zm-20 0L10 10l4 180 76 4.96z"
         style={{
           fill: "#8c5713",
           fillOpacity: 1,
@@ -21,11 +34,10 @@ export default function InventoryIcon() {
           strokeDasharray: "none",
           strokeOpacity: 1,
         }}
-        transform="translate(-9.2 -9.2)"
+        transform="translate(-9.2 -4.58)"
       />
       <path
-        d="M113.044 83.364h3.513v33.272h-3.513zm-17.821 0H91.71v33.272h3.513z"
-        className="UnoptimicedTransforms"
+        d="M113.457 83.364h3.1v33.272h-3.1zm-38.002 0h-3.1v33.272h3.1z"
         style={{
           fill: "#ffc40b",
           fillOpacity: 1,
@@ -38,7 +50,7 @@ export default function InventoryIcon() {
           strokeOpacity: 1,
           paintOrder: "markers stroke fill",
         }}
-        transform="translate(-13.333 -12.713)"
+        transform="translate(-3.656 -8.049)"
       />
     </svg>
   )

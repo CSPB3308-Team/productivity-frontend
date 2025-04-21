@@ -1,5 +1,6 @@
 import { useState, useCallback } from "react";
 import { backendUrl } from "../config";
+import AuthService from '../utils/Auth';
 
 /**
  * Custom hook for making POST requests to the backend.
@@ -12,7 +13,7 @@ import { backendUrl } from "../config";
  *          loading - Whether the request is currently in progress.
  *          sendRequest - The function to trigger the request.
  */
-const usePostRequest = <TResponse>(endpoint: string) => {
+const usePostRequest = <TResponse>(endpoint: string, auth?: boolean) => {
   const [data, setData] = useState<TResponse | null>(null);
   const [error, setError] = useState<Error | null>(null);
   const [loading, setLoading] = useState(false);
@@ -27,12 +28,19 @@ const usePostRequest = <TResponse>(endpoint: string) => {
       setLoading(true);
       setError(null);
 
+      var header = {
+        'Content-Type': 'application/json'
+      }
+
+      if (auth) {
+        header.Authorization = 'Bearer ' + AuthService.getToken();
+      }
+
       try {
         const response = await fetch(`${backendUrl}/${endpoint}`, {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: header,
+
           body: JSON.stringify(body),
         });
 
