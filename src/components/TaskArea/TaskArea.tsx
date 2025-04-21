@@ -2,7 +2,6 @@ import { useState } from 'react';
 import LongTermTasks from './LongTermTasks/LongTermTasks';
 import ShortTermTasks from './ShortTermTasks/ShortTermTasks';
 import AddTask from './AddDeleteTask/AddTask';
-import Button from 'react-bootstrap/Button';
 
 const TaskArea = () => {
   const [addingTask, setAddingTask] = useState(false);
@@ -12,9 +11,9 @@ const TaskArea = () => {
   return (
     <div className="d-flex flex-column w100">
       {addingTask && <AddTask setAddingTask={setAddingTask} />}
-      <Button className="w-100 mb-3" type='button' onClick={handleClick}>
+      <button className="w-100 mb-3 btn btn-primary" type='button' onClick={handleClick}>
         Add Task
-      </Button>
+      </button>
       <LongTermTasks addingTask={addingTask} />
       <ShortTermTasks addingTask={addingTask} />
     </div>
