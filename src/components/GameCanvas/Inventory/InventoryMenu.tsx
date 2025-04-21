@@ -86,8 +86,9 @@ export default function InventoryMenu(input: ItemInputs) {
       } else {
         return false;
       }
+    // disable if either is not loaded, or balance is 0
     } else {
-      return false;
+      return true;
     }
   }
 
