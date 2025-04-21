@@ -7,10 +7,12 @@ import Button from 'react-bootstrap/Button';
 const TaskArea = () => {
   const [addingTask, setAddingTask] = useState(false);
 
+  const handleClick = () => setAddingTask(true);
+
   return (
     <div className="d-flex flex-column w100">
       {addingTask && <AddTask setAddingTask={setAddingTask} />}
-      <Button className="w-100 mb-3" type='button' onClick={() => setAddingTask(true)}>
+      <Button className="w-100 mb-3" type='button' onClick={handleClick}>
         Add Task
       </Button>
       <LongTermTasks addingTask={addingTask} />
