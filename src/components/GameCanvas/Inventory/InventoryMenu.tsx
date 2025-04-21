@@ -80,13 +80,13 @@ export default function InventoryMenu(input: ItemInputs) {
 
   // disables purchase button if user lacks sufficient funds
   function checkBalance(): boolean {
-    if (userBalance && selectedItem) {
+    if (userBalance !== null  && selectedItem !== null) {
       if (userBalance < selectedItem.item_cost) {
         return true;
       } else {
         return false;
       }
-    // disable if either is not loaded, or balance is 0
+    // disable if either is not loaded
     } else {
       return true;
     }
