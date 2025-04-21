@@ -20,7 +20,7 @@ const DeleteAccount: React.FC<{ token: string }> = ({ token }) => {
   return (
     <>
       <h3>DANGER ZONE</h3>
-      <button type='button' onClick={() => setConfirmingDelete(true)}>
+      <button type='button' className="btn btn-danger" onClick={() => setConfirmingDelete(true)}>
         Delete account
       </button>
       {confirmingDelete && (

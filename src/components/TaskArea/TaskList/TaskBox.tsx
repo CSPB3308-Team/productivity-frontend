@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import usePostPutPatchDelete from '../../../hooks/usePostPutPatchDelete';
 import { PostPutPatchTaskResponse, TaskData } from '../../../types';
 import DeleteTask from '../AddDeleteTask/DeleteTask';
+import Card from 'react-bootstrap/Card';
 
 const TaskBox: React.FC<{ task: TaskData }> = ({ task }) => {
   const [complete, setComplete] = useState(task.task_complete);
@@ -36,13 +37,13 @@ const TaskBox: React.FC<{ task: TaskData }> = ({ task }) => {
       {deletingTask && (
         <DeleteTask task={task} setDeletingTask={setDeletingTask} setIsDeleted={setIsDeleted} />
       )}
-      <label>
+<Card className="d-flex flex-row align-items-center justify-content-between p-2 mb-2">        
         <input type='checkbox' checked={complete} onChange={handleChange} />
-        {task.task_name}
-        <button type='button' onClick={() => setDeletingTask(true)}>
+        <Card.Text className="mb-3 p-3">{task.task_name}</Card.Text>
+        <button className="btn btn-danger" type='button' onClick={() => setDeletingTask(true)}>
           Delete
         </button>
-      </label>
+      </Card>
       {loading && <p>Loading...</p>}
       {error && <p>Failed to update task: {error.message}</p>}
       {data && messageVisible && (

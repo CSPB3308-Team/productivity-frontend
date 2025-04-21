@@ -5,8 +5,8 @@ import AuthService from '../../../utils/Auth';
 import styles from './AddDeleteTask.module.css';
 
 type AddTaskProps = {
-  setAddingTask: (addingTask: boolean) => void;
-};
+    setAddingTask: React.Dispatch<React.SetStateAction<boolean>>;
+  };
 
 const AddTask: React.FC<AddTaskProps> = ({ setAddingTask }) => {
   const [taskName, setTaskName] = useState('');

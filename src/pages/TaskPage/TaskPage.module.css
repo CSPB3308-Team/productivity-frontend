@@ -1,12 +1,17 @@
-.taskPageDiv {
-  display: flex;
-  justify-content: center;
-  width: 90%;
-  height: 90vmin;
-  margin: 5vmin;
+.gameDiv {
+  flex: 0 0 80%;
+  height: 100vh;
 }
 
-.gameAreaDiv {
-  margin: auto;
+.taskDiv {
+  flex: 0 0 20%;
+  height: 100vh;
 }
 
+/* Mobile override */
+@media (max-width: 768px) {
+  .gameDiv,
+  .taskDiv {
+    flex: 0 0 100%;
+  }
+}
