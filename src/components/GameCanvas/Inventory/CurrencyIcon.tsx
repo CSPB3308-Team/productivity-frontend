@@ -1,4 +1,4 @@
-import styles from './GameCanvas.module.css';
+import styles from '../GameCanvas.module.css';
 
 export default function CurrencyIcon() {
   return (

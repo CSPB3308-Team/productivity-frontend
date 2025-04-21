@@ -65,4 +65,9 @@ export type SignupResponse = {
   user: UserInfo & { id: number };
 };
 
+export type ItemAddPost = {
+  item_id: string;
+  user_id: string;
+}
+
 export type UserUpdateResponse = SignupResponse & { token: string };
