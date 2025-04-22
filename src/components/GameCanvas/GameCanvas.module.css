@@ -205,7 +205,7 @@ html, body, #root, .taskPageDiv, .gameAreaDiv {
 .energyBar {
   overflow: hidden;
   position: absolute;
-  top: max(5vmin, 5%);
+  bottom: max(8vmin, 5%);
   height: min(30vmin, 7%);
   width: min(100vmin, 30%);
   box-sizing: border-box;

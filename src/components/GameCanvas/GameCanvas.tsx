@@ -64,7 +64,6 @@ export default function GameCanvas() {
     if (loaded == true) {
       return (
         <div className={styles.inventoryBtnDiv}>
-          {/* <InventoryBox /> */}
           <div className={styles.inventoryIconDiv}
             onMouseEnter={() => mouseInvActive(true)}
             onMouseLeave={() => mouseInvActive(false)}
@@ -86,6 +85,12 @@ export default function GameCanvas() {
             avatarManager={avatarManager as AvatarManager}
             cloneManager={cloneManager as AvatarManager}
           />
+        </>
+      )
+    } else {
+      return (
+        <>
+          <AvatarEnergy />
         </>
       )
     }
@@ -195,7 +200,6 @@ export default function GameCanvas() {
           />
         </Canvas>
       </div>
-      <AvatarEnergy />
 
       {/* INVENTORY MENU */}
       {drawInv(openInv)}
