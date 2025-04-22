@@ -19,6 +19,7 @@ import InventoryMenu from './Inventory/InventoryMenu';
 import InventoryPreview from './Inventory/InventoryPreview';
 import InventoryIcon from './Inventory/InventoryIcon';
 import InventoryIconHover from './Inventory/InventoryIconHover';
+import AvatarEnergy from './AvatarEnergy';
 
 export default function GameCanvas() {
   var devMode = false;
@@ -194,6 +195,7 @@ export default function GameCanvas() {
           />
         </Canvas>
       </div>
+      <AvatarEnergy />
 
       {/* INVENTORY MENU */}
       {drawInv(openInv)}
