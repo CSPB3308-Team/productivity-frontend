@@ -45,15 +45,11 @@ export default function EnergyBar() {
       }
     }
 
-    // console.log(tasks)
-
-
   }, [longTasks, shortTasks, dailyTasks]);
 
   return (
     <div className={styles.energyBar}>
       <div className={styles.energyBarFill} style={{width: `${energy}%`}}>
-      
       </div>
     </div>
   )

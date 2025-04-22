@@ -189,9 +189,7 @@ html, body, #root, .taskPageDiv, .gameAreaDiv {
   justify-content: center;
   height: 10%;
   width: 30%;
-  left: 70%;
-  /* top: 80%; */
-  
+  left: 70%; 
 }
 
 .inventoryPurchaseButton {
