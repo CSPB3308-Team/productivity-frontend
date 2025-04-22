@@ -36,8 +36,10 @@ export default function EnergyBar() {
       if (times.length > 0) {
         let last = times[times.length-1]; // get last (most recent) completion
         let percent = (1 - (Date.now() - last) / MAX_TIME) * 100;
-        if (percent < 0) {
+        if (percent > 100) {
           percent = 100;
+        } else if (percent < 0) {
+          percent = 0;
         }
         setEnergy(percent);
       }
