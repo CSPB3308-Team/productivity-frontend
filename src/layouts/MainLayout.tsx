@@ -8,6 +8,11 @@ const MainLayout = () => {
       <main>
         <Outlet />
       </main>
+      <footer className="mt-5 py-3 border-top bg-primary text-center">
+        <div className="container">
+          <span className="text-muted">© 2025 Productivity App. All rights reserved.</span>  
+        </div>
+      </footer>
     </>
   );
 };
