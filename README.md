@@ -2,10 +2,6 @@
 
 ## Prerequisite Installations
 
-### Git
-
-The project obviously uses Git, but to be a bit more specific, it would likely be easiest to have a local installation of Git on your machine that is authenticated with your GitHub account so that you can clone the repository and then spin up the local development server on localhost (explained below).
-
 ### Node.js
 
 Node.js is a runtime environment for executing JavaScript outside of a web browser. When you install it, it comes with various tools such as `npm` (Node Package Manager). Here is the [download page](https://nodejs.org/en/download) for Node.js. In terms of the version, any v22 should be fine and is likely already selected if you don't change anything. v23 or something lower than v22 might also be fine, but I'm currently on v22. 
