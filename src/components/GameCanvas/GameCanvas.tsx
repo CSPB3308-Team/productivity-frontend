@@ -19,6 +19,7 @@ import InventoryMenu from './Inventory/InventoryMenu';
 import InventoryPreview from './Inventory/InventoryPreview';
 import InventoryIcon from './Inventory/InventoryIcon';
 import InventoryIconHover from './Inventory/InventoryIconHover';
+import AvatarEnergy from './AvatarEnergy';
 
 export default function GameCanvas() {
   var devMode = false;
@@ -63,7 +64,6 @@ export default function GameCanvas() {
     if (loaded == true) {
       return (
         <div className={styles.inventoryBtnDiv}>
-          {/* <InventoryBox /> */}
           <div className={styles.inventoryIconDiv}
             onMouseEnter={() => mouseInvActive(true)}
             onMouseLeave={() => mouseInvActive(false)}
@@ -85,6 +85,12 @@ export default function GameCanvas() {
             avatarManager={avatarManager as AvatarManager}
             cloneManager={cloneManager as AvatarManager}
           />
+        </>
+      )
+    } else {
+      return (
+        <>
+          <AvatarEnergy />
         </>
       )
     }

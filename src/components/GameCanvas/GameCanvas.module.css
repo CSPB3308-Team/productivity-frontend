@@ -189,9 +189,7 @@ html, body, #root, .taskPageDiv, .gameAreaDiv {
   justify-content: center;
   height: 10%;
   width: 30%;
-  left: 70%;
-  /* top: 80%; */
-  
+  left: 70%; 
 }
 
 .inventoryPurchaseButton {
@@ -200,4 +198,23 @@ html, body, #root, .taskPageDiv, .gameAreaDiv {
 
 .inventoryCostText {
   text-align: center;
+}
+
+.energyBar {
+  overflow: hidden;
+  position: absolute;
+  bottom: max(8vmin, 5%);
+  height: min(30vmin, 7%);
+  width: min(100vmin, 30%);
+  box-sizing: border-box;
+  border: 0.3vmin solid rgb(35, 35, 35);
+  border-radius: 2vmin;
+  background-color: rgb(41, 41, 41);
+  z-index: 3;
+}
+
+.energyBarFill {
+  height: 100%;
+  border-radius: 0vmin;
+  background-color: rgb(29, 206, 29);
 }

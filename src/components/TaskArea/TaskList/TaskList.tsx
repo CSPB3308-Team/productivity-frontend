@@ -6,7 +6,7 @@ import TaskBox from './TaskBox';
 import Spinner from 'react-bootstrap/Spinner';
 
 
-import { UserContext } from '../../../pages/TaskPage/TaskPage';
+import { TaskContext, UserContext } from '../../../pages/TaskPage/TaskPage';
 
 type TaskListProps = {
   taskType: TaskType;
@@ -16,12 +16,15 @@ type TaskListProps = {
 const TaskList: React.FC<TaskListProps> = ({ taskType, addingTask }) => {
 
   const user = useContext(UserContext);
+  const {
+    setLongTasks,
+    setShortTasks,
+    setDailyTasks } = useContext(TaskContext);
 
   const [tasks, setTasks] = useState<TaskData[] | null>(null);
   const { data, error, loading, sendRequest } = useGetRequest<TaskData[]>('tasks');
   const [showCompleted, setShowCompleted] = useState(false);
 
-  
   // Initially get the tasks
   useEffect(() => {
     if (user) sendRequest({ task_type: taskType, user_id: String(user.id) });
@@ -30,8 +33,24 @@ const TaskList: React.FC<TaskListProps> = ({ taskType, addingTask }) => {
 
   // Set the initial tasks to local state
   useEffect(() => {
-    if (data) setTasks(data);
-  }, [data, setTasks]);
+    if (data) {
+      setTasks(data);
+
+      // pass data to global state
+      switch (taskType) {
+        case "long-term":
+          setLongTasks(data);
+          break;
+        case 'short-term':
+          setShortTasks(data);
+          break;
+        case 'daily':
+          setDailyTasks(data);
+          break;
+      }
+    };
+
+  }, [data]);
 
   // Sort between complete and
   const incompleteTasks = tasks?.filter((task) => !task.task_complete) || [];
@@ -43,33 +62,31 @@ const TaskList: React.FC<TaskListProps> = ({ taskType, addingTask }) => {
       }
       {error && <p>Failed to get tasks: {error.message}</p>}
       {tasks && (
-  <div className={styles.taskListDiv}>
-    {/* Incomplete tasks */}
-    {incompleteTasks.map((task) => (
-      <TaskBox key={task.id} task={task} />
-    ))}
+        <div className={styles.taskListDiv}>
+          {/* Incomplete tasks */}
+          {incompleteTasks.map((task) => (
+            <TaskBox key={task.id} task={task} />
+          ))}
 
-    {/* Drawer Toggle Button */}
-    {completedTasks.length > 0 && (
-  <div className={styles.completedDrawerToggle}>
-    <button className='btn btn-tertiary show-complete-btn' onClick={() => setShowCompleted(!showCompleted)}>
-      {showCompleted ? 'Hide' : 'Show'} Completed Tasks ({completedTasks.length})
-    </button>
-  </div>
-)}
+          {/* Drawer Toggle Button */}
+          {completedTasks.length > 0 && (
+            <div className={styles.completedDrawerToggle}>
+              <button className='btn btn-tertiary show-complete-btn' onClick={() => setShowCompleted(!showCompleted)}>
+                {showCompleted ? 'Hide' : 'Show'} Completed Tasks ({completedTasks.length})
+              </button>
+            </div>
+          )}
 
-
-    {/* Collapsible drawer for completed tasks */}
-    {showCompleted && (
-      <div className={styles.completedDrawer}>
-        {completedTasks.map((task) => (
-          <TaskBox key={task.id} task={task} />
-        ))}
-      </div>
-    )}
-  </div>
-)}
-
+          {/* Collapsible drawer for completed tasks */}
+          {showCompleted && (
+            <div className={styles.completedDrawer}>
+              {completedTasks.map((task) => (
+                <TaskBox key={task.id} task={task} />
+              ))}
+            </div>
+          )}
+        </div>
+      )}
     </>
   );
 };
