@@ -12,17 +12,26 @@ const Header = () => {
         />
         <h1>Taskagotchi</h1>
       <nav>
-      <ul className={`${styles.navList} list-unstyled d-flex align-items-center justify-content-evenly m-0
-`}>
+        <ul 
+          className={`${styles.navList} list-unstyled d-flex align-items-center justify-content-evenly m-0`}>
           <li>
             <Link to='/'>Home</Link>
           </li>
           <li>
             <Link to='/account'>Account</Link>
           </li>
+          <li>
+            <Link to='/about'>About</Link>
+          </li>
+          <li>
+            <Link to='/tips'>Tips</Link>
+          </li>
+          <li>
+            <Link to='/authors'>Authors</Link>
+          </li>
         </ul>
       </nav>
-      </div>
+    </div>
     </header>
   );
 };
